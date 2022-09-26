@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1089654314992276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4013506927610492}
+  - component: {fileID: 114285194632179770}
+  m_Layer: 0
+  m_Name: WorldPrefab
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4013506927610492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089654314992276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 495330975046237097}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114285194632179770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089654314992276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d72dbca884a664485700347e527a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  markerSpawnMethod: 0
+  SIMULATION_TIME_STEP: 0.02
+  MAX_AGENTS: 0
+  AGENT_RADIUS: 1
+  AUXIN_RADIUS: 0.1
+  AUXIN_DENSITY: 0.5
+  GOAL_DISTANCE_THRESHOLD: 1
+  planeMeshFilter: {fileID: 0}
+  _terrain: {fileID: 0}
+  _dimension: {x: 30, y: 20}
+  _offset: {x: 0, y: 0}
+  _maxAgents: 30
+  _agentPrefabList:
+  - {fileID: 5132337951249822280, guid: 9b35fceeda33b0e4e83d87fc5126c588, type: 3}
+  - {fileID: 1289276104905072679, guid: 207355d92de4af942b967724f47c0cac, type: 3}
+  - {fileID: 1348513369947889383, guid: 43fe5248a53afd14282f45ce6147b8fc, type: 3}
+  _cellPrefab: {fileID: 114240077233781082, guid: ff73e8f22eec49d4f9b2c973dcad2071,
+    type: 3}
+  _auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
+    type: 3}
+  _agents: []
+  spawnAreas: []
+  _agentsContainer: {fileID: 0}
+  _markerSpawner: {fileID: 0}
+--- !u!1 &5448752754506926633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 495330975046237097}
+  - component: {fileID: 5642413052527059447}
+  - component: {fileID: 1604022374861079138}
+  m_Layer: 0
+  m_Name: MarkerSpawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &495330975046237097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5448752754506926633}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4013506927610492}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5642413052527059447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5448752754506926633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c42ecb7a24b9364b857daa816fa577d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMethod: 0
+  MarkerRadius: 0.1
+  MarkerDensity: 0.65
+  auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
+    type: 3}
+--- !u!114 &1604022374861079138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5448752754506926633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe764cc97fe3454bb42d0e2f5225f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMethod: 1
+  MarkerRadius: 0.1
+  MarkerDensity: 0.65
+  auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
+    type: 3}
