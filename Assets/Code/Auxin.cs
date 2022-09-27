@@ -23,6 +23,8 @@ namespace Biocrowds.Core
             set { _isTaken = value; }
         }
 
+        public bool isActive = true;
+
         //position
         private Vector3 _position;
         public Vector3 Position

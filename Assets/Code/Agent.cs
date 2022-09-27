@@ -377,24 +377,27 @@ namespace Biocrowds.Core
             //iterate all cell auxins to check distance between auxins and agent
             for (int i = 0; i < cellAuxins.Count; i++)
             {
-                //see if the distance between this agent and this auxin is smaller than the actual value, and inside agent radius
-                float distanceSqr = (transform.position - cellAuxins[i].Position).sqrMagnitude;
-                if (distanceSqr < cellAuxins[i].MinDistance && distanceSqr <= agentRadius * agentRadius)
+                if (cellAuxins[i].isActive)
                 {
-                    //take the auxin!
-                    //if this auxin already was taken, need to remove it from the agent who had it
-                    if (cellAuxins[i].IsTaken)
-                        cellAuxins[i].Agent.Auxins.Remove(cellAuxins[i]);
+                    //see if the distance between this agent and this auxin is smaller than the actual value, and inside agent radius
+                    float distanceSqr = (transform.position - cellAuxins[i].Position).sqrMagnitude;
+                    if (distanceSqr < cellAuxins[i].MinDistance && distanceSqr <= agentRadius * agentRadius)
+                    {
+                        //take the auxin!
+                        //if this auxin already was taken, need to remove it from the agent who had it
+                        if (cellAuxins[i].IsTaken)
+                            cellAuxins[i].Agent.Auxins.Remove(cellAuxins[i]);
 
-                    //auxin is taken
-                    cellAuxins[i].IsTaken = true;
+                        //auxin is taken
+                        cellAuxins[i].IsTaken = true;
 
-                    //auxin has agent
-                    cellAuxins[i].Agent = this;
-                    //update min distance
-                    cellAuxins[i].MinDistance = distanceSqr;
-                    //update my auxins
-                    _auxins.Add(cellAuxins[i]);
+                        //auxin has agent
+                        cellAuxins[i].Agent = this;
+                        //update min distance
+                        cellAuxins[i].MinDistance = distanceSqr;
+                        //update my auxins
+                        _auxins.Add(cellAuxins[i]);
+                    }
                 }
             }
 

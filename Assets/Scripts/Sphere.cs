@@ -106,6 +106,7 @@ public class Sphere : MonoBehaviour
         foreach(Auxin a in Auxins)
         {
             a.gameObject.SetActive(!moshpit);
+            a.isActive = !moshpit;
         }
 
     }
