@@ -33,7 +33,7 @@ namespace Biocrowds.Core
 
         public static float SPHERE_WEIGTH_PUB = 1.0f;
         public static float SPHERE_DISTANCE_PUB = 1.0f;
-
+        public static bool CellsReady = false;
 
         [Header("Terrain Setting")]
         public MeshFilter planeMeshFilter;
@@ -210,7 +210,10 @@ namespace Biocrowds.Core
                     yield return null;
                 }
             }
+            CellsReady = true;
         }
+
+        
 
         private IEnumerator DartThrowing()
         {
