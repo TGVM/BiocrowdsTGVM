@@ -19,20 +19,20 @@ namespace Biocrowds.Core
     {
         [Header("Simulation Configuration")]
         public SimulationConfiguration.MarkerSpawnMethod markerSpawnMethod;
-
         [SerializeField] private float SIMULATION_TIME_STEP = 0.02f;
-
         [SerializeField] private float MAX_AGENTS = 0;
         //agent radius
         [SerializeField] private float AGENT_RADIUS = 1.00f;
-
         //radius for auxin collide
         [SerializeField] private float AUXIN_RADIUS = 0.1f;
-
         //density
         [SerializeField] private float AUXIN_DENSITY = 0.50f;
-
         [SerializeField] private float GOAL_DISTANCE_THRESHOLD = 1.0f;
+        [SerializeField] private float SPHERE_WEIGTH = 1.0f;
+        [SerializeField] private float SPHERE_DISTANCE = 1.0f;
+
+        public static float SPHERE_WEIGTH_PUB = 1.0f;
+        public static float SPHERE_DISTANCE_PUB = 1.0f;
 
 
         [Header("Terrain Setting")]
@@ -55,8 +55,8 @@ namespace Biocrowds.Core
             get { return _offset; }
         }
         //number of agents in the scene
-        [SerializeField]
-        private int _maxAgents = 30;
+        //[SerializeField]
+        //private int _maxAgents = 30;
 
         //agent prefab
         [SerializeField]
@@ -81,11 +81,11 @@ namespace Biocrowds.Core
         private int _newAgentID = 0;
 
         //teste
-        [Header("Visuals")]
-        public Color colorMin, colorMax;
-        public bool changesColor;
-        public Color finalColorMin, finalColorMax;
-        Renderer mr;
+        //[Header("Visuals")]
+        //public Color colorMin, colorMax;
+        //public bool changesColor;
+        //public Color finalColorMin, finalColorMax;
+        //Renderer mr;
 
         
 
@@ -130,6 +130,9 @@ namespace Biocrowds.Core
                 _offset.y -= (_dimension.y / 2f);
 
                 planeMeshFilter.gameObject.SetActive(false);
+
+                SPHERE_DISTANCE_PUB = SPHERE_DISTANCE;
+                SPHERE_WEIGTH_PUB = SPHERE_WEIGTH;
             }
         }
 
@@ -352,10 +355,10 @@ namespace Biocrowds.Core
             {
                 Agent a = _agents[i];
                 _agents[i].UpdateVisualAgent();
-                mr = _agents[i].GetComponent<Renderer>();
-                mr.material.color = new Color(mr.material.color.r + a.rModifier * Time.deltaTime,
-                                                mr.material.color.g + a.gModifier * Time.deltaTime,
-                                                mr.material.color.b + a.bModifier * Time.deltaTime);
+                //mr = _agents[i].GetComponent<Renderer>();
+                //mr.material.color = new Color(mr.material.color.r + a.rModifier * Time.deltaTime,
+                //                                mr.material.color.g + a.gModifier * Time.deltaTime,
+                //                                mr.material.color.b + a.bModifier * Time.deltaTime);
 
             }
 

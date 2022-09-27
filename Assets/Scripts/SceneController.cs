@@ -10,6 +10,7 @@ public class SceneController : MonoBehaviour
     public World world;
     private bool initialized = false;
 
+    public static bool Moshpit = false;
     public static bool ShowCells { get; protected set; } = true;
     public static bool ShowAuxins { get; protected set; } = true;
     public static bool ShowSpawnAreas { get; protected set; } = true;
@@ -68,13 +69,20 @@ public class SceneController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !initialized)
         {
             Debug.Log("Loading World");
-
+            Debug.Log("Press M to toggle the moshpit");
             List<SpawnArea> _spawners = FindObjectsOfType<SpawnArea>().ToList();
             foreach (SpawnArea s in _spawners)
                 s.ShowMesh(ShowSpawnAreas);
 
             initialized = true;
             world.LoadWorld();
+        }
+
+        if (Input.GetKeyDown(KeyCode.M)) {
+            //opens space on sphere area
+
+            Moshpit = !Moshpit;
+
         }
 
     }

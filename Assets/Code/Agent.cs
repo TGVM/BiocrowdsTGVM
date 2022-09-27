@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using System;
+using UnityEngine.UIElements;
 
 namespace Biocrowds.Core
 {
@@ -31,6 +32,12 @@ namespace Biocrowds.Core
 
         //Moshpit Area
         public GameObject SphereMP;
+        public bool moshpit;
+        public float sphWeight;
+        public float sphDist;
+
+        public delegate void OnVariableChangeDelegate(bool newVal);
+        public event OnVariableChangeDelegate OnVariableChange;
 
         //goal
         public GameObject Goal;
@@ -93,10 +100,10 @@ namespace Biocrowds.Core
 
         public int auxinCount;
 
-        private void Awake()
-        {
-            SphereMP = GameObject.FindGameObjectWithTag("sphere");
-        }
+        //private void Awake()
+        //{
+        //    SphereMP = GameObject.FindGameObjectWithTag("sphere");
+        //}
 
         void Start()
         {
@@ -109,6 +116,10 @@ namespace Biocrowds.Core
             //cache world info
             _totalX = Mathf.FloorToInt(_world.Dimension.x / 2.0f) - 1;
             _totalZ = Mathf.FloorToInt(_world.Dimension.y / 2.0f);
+
+            sphDist = World.SPHERE_DISTANCE_PUB;
+            sphWeight = World.SPHERE_WEIGTH_PUB;
+
         }
 
         public void NavmeshStep(float _timeStep)
@@ -132,7 +143,13 @@ namespace Biocrowds.Core
             }
         }
 
-        
+        //private void Update()
+        //{
+        //    moshpit = SceneController.Moshpit;
+        //    RegisterCallback<ChangeEvent<bool>>(OnBoolChangedEvent);
+        //}
+
+       
 
 
         /*void Update()
@@ -294,19 +311,24 @@ namespace Biocrowds.Core
             //Debug.Log(Sphere.transform.position.ToString());
 
             //if auxin is inside sphere wMP gets a higher value to subtract from weight
-            try
-            {
-                float dist = Vector3.Distance(_distAuxin[pRelationIndex], SphereMP.transform.position);
-                if (dist < 15)
-                {
-                    Debug.Log("Dentro da Esfera");
-                    wMP = 0.5f;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning(e.Message.ToString());
-            }
+            //if (moshpit)
+            //{
+            //    //Debug.Log("mp");
+            //    //Debug.Log(SphereMP.transform.position);
+            //    try
+            //    {
+            //        float dist = Vector3.Distance(_auxins[pRelationIndex].Position, SphereMP.transform.position);
+            //        if (dist < sphDist)
+            //        {
+            //            wMP = sphWeight;
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Debug.LogWarning(e.Message.ToString());
+            //    }
+            //}
+            
 
             //return the formula, defined in thesis
             return (float)((1.0 / (1.0 + Ymodule)) * (1.0 + ((dot) / (Xmodule * Ymodule))) - wMP);
@@ -336,6 +358,10 @@ namespace Biocrowds.Core
                 //else, go idle
                 _velocity = Vector3.zero;
             }
+        }
+
+        public void DisableAuxins() { 
+        
         }
 
         //find all auxins near him (Voronoi Diagram)
