@@ -51,7 +51,7 @@ public class Sphere : MonoBehaviour
         moshpit = SceneController.Moshpit;
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
-            Debug.Log("trigger");
+            //Debug.Log("trigger");
             DisableAuxins();
         }
     }

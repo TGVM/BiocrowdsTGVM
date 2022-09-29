@@ -360,9 +360,7 @@ namespace Biocrowds.Core
             }
         }
 
-        public void DisableAuxins() { 
         
-        }
 
         //find all auxins near him (Voronoi Diagram)
         //call this method from game controller, to make it sequential for each agent
@@ -399,6 +397,14 @@ namespace Biocrowds.Core
                         _auxins.Add(cellAuxins[i]);
                     }
                 }
+            }
+
+            if(_auxins.Count == 0)
+            {
+                foreach(Vector3 d in _distAuxin){
+                    d.Set(0, 0, 0);
+                }
+                //_distAuxin.Clear();
             }
 
             FindCell();

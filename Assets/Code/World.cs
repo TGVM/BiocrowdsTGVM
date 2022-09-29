@@ -402,12 +402,15 @@ namespace Biocrowds.Core
                 //vector for each auxin
                 for (int j = 0; j < agentAuxins.Count; j++)
                 {
-                    //add the distance vector between it and the agent
-                    _agents[i]._distAuxin.Add(agentAuxins[j].Position - _agents[i].transform.position);
+                    if (agentAuxins[j].isActive) { 
 
-                    //just draw the lines to each auxin
-                    if (_showAgentAuxingVector)
-                        Debug.DrawLine(agentAuxins[j].Position, _agents[i].transform.position, Color.green);
+                        //add the distance vector between it and the agent
+                        _agents[i]._distAuxin.Add(agentAuxins[j].Position - _agents[i].transform.position);
+
+                        //just draw the lines to each auxin
+                        if (_showAgentAuxingVector)
+                            Debug.DrawLine(agentAuxins[j].Position, _agents[i].transform.position, Color.green);
+                    }
                 }
 
                 //calculate the movement vector
