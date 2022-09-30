@@ -170,7 +170,7 @@ namespace Biocrowds.Core
                 Debug.DrawLine(_navMeshPath.corners[i], _navMeshPath.corners[i + 1], Color.red);
         }*/
 
-        private void UpdateGoalPositionAndNavmesh()
+        public void UpdateGoalPositionAndNavmesh()
         {
             if (goalIndex >= goalsList.Count)
                 return;
@@ -217,6 +217,11 @@ namespace Biocrowds.Core
                 transform.Translate(_velocity * _timeStep, Space.World);
         }
 
+        public void SkipGoal()
+        {
+            goalIndex++;
+        }
+
         public void WaitStep(float _timeStep)
         {
             if (goalIndex != goalsWaitList.Count - 1 && goalIndex + 1 > goalsWaitList.Count)
@@ -234,7 +239,8 @@ namespace Biocrowds.Core
                     UpdateGoalPositionAndNavmesh();
                 }
             }
-            else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1)
+            //else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1) original conditions
+            else if (goalIndex < goalsList.Count - 1)   //modified conditions
             {
                 if (goalsWaitList[goalIndex] >= 0.1f)
                 {

@@ -31,6 +31,7 @@ namespace Biocrowds.Core
         [SerializeField] private float SPHERE_WEIGTH = 1.0f;
         [SerializeField] private float SPHERE_DISTANCE = 1.0f;
 
+        public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
         public static float SPHERE_DISTANCE_PUB = 1.0f;
         public static bool CellsReady = false;
@@ -88,7 +89,9 @@ namespace Biocrowds.Core
         //Renderer mr;
 
         
-
+        public List<Agent> Agents { 
+            get { return _agents; }
+        }
 
         public List<Cell> Cells
         {
