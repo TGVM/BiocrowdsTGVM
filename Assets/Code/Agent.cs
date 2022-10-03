@@ -36,8 +36,7 @@ namespace Biocrowds.Core
         public float sphWeight;
         public float sphDist;
 
-        public delegate void OnVariableChangeDelegate(bool newVal);
-        public event OnVariableChangeDelegate OnVariableChange;
+        
 
         //goal
         public GameObject Goal;
@@ -121,6 +120,11 @@ namespace Biocrowds.Core
             sphWeight = World.SPHERE_WEIGTH_PUB;
 
         }
+        public void AddGoal(GameObject newGoal)
+        {
+            this.goalsList.Add(newGoal);
+        }
+
 
         public void NavmeshStep(float _timeStep)
         {

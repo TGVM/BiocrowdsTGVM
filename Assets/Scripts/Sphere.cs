@@ -85,16 +85,16 @@ public class Sphere : MonoBehaviour
         Agents = myAgents;
     }
 
-    //2. once the trigger moshpit is activated sort new goals near the sphere for those agents (random goals or nearest goals?)
-    //random does not work
+    //2. once the trigger moshpit is activated find new goals near the sphere for those agents 
     private void OpenMoshpit(){
         
-        foreach (Agent a in Agents)
+        for (int i=0; i<Agents.Count; i++)
         {
-
             GameObject newGoal = null;
+
+            //nearest method
             float minDist = Mathf.Infinity;
-            Vector3 currentPos = a.transform.position;
+            Vector3 currentPos = Agents[i].transform.position;
             foreach (GameObject g in moshpitGoalList)
             {
                 float dist = Vector3.Distance(g.transform.position, currentPos);
@@ -104,18 +104,10 @@ public class Sphere : MonoBehaviour
                     minDist = dist;
                 }
             }
-            a.goalsList.Add(newGoal);
-            a.SkipGoal();
-
-
-            //random method
-            //int num = Random.Range(0, moshpitGoalList.Count);
-            //newGoal = moshpitGoalList[num];
-            //a.goalsList.Add(newGoal);
-            //a.SkipGoal();
+            Agents[i].AddGoal(newGoal);
+            Agents[i].SkipGoal();
         }
-        
-        
+
     }
 
     //3. after most of the agents are around the sphere start sending some of them to the middle
