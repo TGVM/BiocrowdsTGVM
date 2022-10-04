@@ -471,7 +471,9 @@ namespace Biocrowds.Core
             newAgent.CurrentCell = GetClosestCellToPoint(_pos);
             newAgent.agentRadius = AGENT_RADIUS;  //agent radius
             newAgent.Goal = _goalList[0];  //agent goal
-            newAgent.goalsList = _goalList;
+            newAgent.goalsList = new List<GameObject>();
+            for(int i = 0; i < _goalList.Count; i++)
+                newAgent.goalsList.Add(_goalList[i]);
             newAgent.removeWhenGoalReached = _removeWhenGoalReached;
             newAgent.World = this;
             _agents.Add(newAgent);
@@ -491,14 +493,20 @@ namespace Biocrowds.Core
             if (_isInitialSpawn)
             {
                 newAgent.Goal = _area.initialAgentsGoalList[0];  //agent goal
-                newAgent.goalsList = _area.initialAgentsGoalList;
+                newAgent.goalsList = new List<GameObject>();
+                for (int i = 0; i < _area.initialAgentsGoalList.Count; i++)
+                    newAgent.goalsList.Add(_area.initialAgentsGoalList[i]);
+                //newAgent.goalsList = _area.initialAgentsGoalList;
                 newAgent.removeWhenGoalReached = _area.initialRemoveWhenGoalReached;
                 newAgent.goalsWaitList = _area.initialWaitList;
             }
             else
             {
                 newAgent.Goal = _area.repeatingGoalList[0];  //agent goal
-                newAgent.goalsList = _area.repeatingGoalList;
+                newAgent.goalsList = new List<GameObject>();
+                for (int i = 0; i < _area.repeatingGoalList.Count; i++)
+                    newAgent.goalsList.Add(_area.repeatingGoalList[i]);
+                //newAgent.goalsList = _area.repeatingGoalList;
                 newAgent.removeWhenGoalReached = _area.repeatingRemoveWhenGoalReached;
                 newAgent.goalsWaitList = _area.repeatingWaitList;
             }

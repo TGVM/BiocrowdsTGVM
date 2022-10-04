@@ -16,11 +16,11 @@ public class DartThrowingMarkerSpawner : MarkerSpawner
         for (int c = 0; c < cells.Count; c++)
         {
             
-            if (c % 10 == 0)
-            {
-                //bigger distance between agents on last cells
-                MarkerDensity -= MarkerDecay;
-            }
+            //if (c % 10 == 0)
+            //{
+            //    //bigger distance between agents on last cells
+            //    MarkerDensity -= MarkerDecay * (c/10);
+            //}
             StartCoroutine(PopulateCell(cells[c], auxins, c));
         }
 

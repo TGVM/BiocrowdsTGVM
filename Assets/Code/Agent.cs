@@ -41,7 +41,7 @@ namespace Biocrowds.Core
         //goal
         public GameObject Goal;
         // Multiple goals
-        public List<GameObject> goalsList;
+        public List<GameObject> goalsList = new List<GameObject>();
         public List<float> goalsWaitList;
         public bool isWaiting = false;
         [SerializeField]

@@ -18,7 +18,9 @@ public class Sphere : MonoBehaviour
     public List<GameObject> moshpitGoalList;
     //public List<float> initialWaitList;
 
+    public List<Agent> agentsList = new List<Agent>();
 
+    public SphereCollider sphereColl;
     //public List<Auxin> Auxins;
     //public List<Cell> Cells;
     //private List<Cell> localCells;
@@ -36,6 +38,7 @@ public class Sphere : MonoBehaviour
     {
         World = FindObjectOfType<World>();
     }
+
 
     public void LoadSphere()
     {
@@ -61,7 +64,7 @@ public class Sphere : MonoBehaviour
             mpTemp = moshpit;
             Debug.Log("trigger");
             Agents = World.Agents;
-            FindAgents();
+            FindAgents2();
             //DisableAuxins();
             OpenMoshpit();
         }
@@ -71,14 +74,36 @@ public class Sphere : MonoBehaviour
 
     /*plan 2*/
     //1. find out which agents are inside the sphere
+    //maybe get agents which distance to next goal is higher than some value
+    
+    //finding inside the sphere
     private void FindAgents()
     {
+        //Debug.Log("Finding");
         myAgents = new List<Agent>();
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
-            if (dist < 3)
+            if (dist <= 3)
             {
+                //Debug.Log("found" + Agents[i].name);
+                myAgents.Add(Agents[i]);
+            }
+        }
+        Agents = myAgents;
+    }
+
+    //finding far from goal
+    private void FindAgents2()
+    {
+        //Debug.Log("Finding");
+        myAgents = new List<Agent>();
+        for (int i = 0; i < Agents.Count; i++)
+        {
+            float dist = Vector3.Distance(Agents[i].transform.position, Agents[i].Goal.transform.position);
+            if (dist > 2)
+            {
+                //Debug.Log("found" + Agents[i].name);
                 myAgents.Add(Agents[i]);
             }
         }
@@ -87,7 +112,6 @@ public class Sphere : MonoBehaviour
 
     //2. once the trigger moshpit is activated find new goals near the sphere for those agents 
     private void OpenMoshpit(){
-        
         for (int i=0; i<Agents.Count; i++)
         {
             GameObject newGoal = null;
@@ -104,11 +128,15 @@ public class Sphere : MonoBehaviour
                     minDist = dist;
                 }
             }
+            // Debug.Log(Agents[i].name + " new goal " + newGoal.name);
+            Agents[i].agentRadius = Agents[i].agentRadius / 2;
             Agents[i].AddGoal(newGoal);
             Agents[i].SkipGoal();
         }
-
     }
+
+    //2.5 something to know which agents are affected by the moshpit (i.e. change colors)
+
 
     //3. after most of the agents are around the sphere start sending some of them to the middle
     //3.5 test collision(?) between them and send them in opposite directions
