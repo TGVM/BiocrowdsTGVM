@@ -15,12 +15,12 @@ public class DartThrowingMarkerSpawner : MarkerSpawner
         // Generate a number of markers for each Cell
         for (int c = 0; c < cells.Count; c++)
         {
-            
-            //if (c % 10 == 0)
-            //{
-            //    //bigger distance between agents on last cells
-            //    MarkerDensity -= MarkerDecay * (c/10);
-            //}
+
+            if (c % 10 == 0)
+            {
+                //bigger distance between agents on last cells
+                MarkerDensity -= MarkerDecay * (c / 10);
+            }
             StartCoroutine(PopulateCell(cells[c], auxins, c));
         }
 

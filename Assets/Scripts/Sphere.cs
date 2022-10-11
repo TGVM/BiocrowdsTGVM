@@ -21,9 +21,9 @@ public class Sphere : MonoBehaviour
     public List<Agent> agentsList = new List<Agent>();
 
     public SphereCollider sphereColl;
-    //public List<Auxin> Auxins;
-    //public List<Cell> Cells;
-    //private List<Cell> localCells;
+    public List<Auxin> Auxins;
+    public List<Cell> Cells;
+    private List<Cell> localCells;
 
     public List<Agent> Agents;
     private List<Agent> myAgents;
@@ -32,6 +32,18 @@ public class Sphere : MonoBehaviour
     private bool moshpit = false;
     private bool loadSph = false;
     private bool ltemp = false;
+
+    //radius for auxin collide
+    public float MarkerRadius = 0.1f;
+
+    //density
+    public float MarkerDensity = 0.65f;
+
+    protected Transform _auxinsContainer;
+    protected float _cellSize;
+    protected int _maxMarkersPerCell;
+
+    public Auxin auxinPrefab;
 
 
     private void Start()
@@ -42,8 +54,8 @@ public class Sphere : MonoBehaviour
 
     public void LoadSphere()
     {
-        //Cells = _world.Cells;
-        //FindLocalCells();
+        Cells = _world.Cells;
+        FindLocalCells();
         //FindNearAuxins();
         //Agents = _world.Agents;
         //FindAgents();
@@ -56,7 +68,7 @@ public class Sphere : MonoBehaviour
         if (loadSph != ltemp && World.CellsReady)
         {
             ltemp = loadSph;
-            //LoadSphere();
+            LoadSphere();
         }
 
         moshpit = SceneController.Moshpit;
@@ -64,9 +76,10 @@ public class Sphere : MonoBehaviour
             mpTemp = moshpit;
             Debug.Log("trigger");
             Agents = World.Agents;
-            FindAgents2();
+            FindAgents();
             //DisableAuxins();
             OpenMoshpit();
+            CreateMarkers(localCells, _world.Auxins);
         }
     }
 
@@ -75,25 +88,30 @@ public class Sphere : MonoBehaviour
     /*plan 2*/
     //1. find out which agents are inside the sphere
     //maybe get agents which distance to next goal is higher than some value
-    
+
     //finding inside the sphere
     private void FindAgents()
     {
+        int agentcount = 0;
         //Debug.Log("Finding");
         myAgents = new List<Agent>();
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
-            if (dist <= 3)
+            if (dist <= 5)
             {
                 //Debug.Log("found" + Agents[i].name);
                 myAgents.Add(Agents[i]);
+                agentcount++;
             }
         }
         Agents = myAgents;
+        Debug.Log("agentes afetados: " + agentcount);
     }
 
     //finding far from goal
+    //maybe get agents far from goal and outside the sphere
+    //send them farther from goal
     private void FindAgents2()
     {
         //Debug.Log("Finding");
@@ -129,14 +147,107 @@ public class Sphere : MonoBehaviour
                 }
             }
             // Debug.Log(Agents[i].name + " new goal " + newGoal.name);
-            Agents[i].agentRadius = Agents[i].agentRadius / 2;
+            //create the "panic" system for agents to close the gaps between them
+            // Agents[i].agentRadius = 0.5f;
+            Agents[i].agentRadius = Agents[i].agentRadius / 4;
             Agents[i].AddGoal(newGoal);
             Agents[i].SkipGoal();
+            Agents[i].SetColorToRed();
+            
+
         }
+        Debug.Log("mosh begins");
     }
 
-    //2.5 something to know which agents are affected by the moshpit (i.e. change colors)
+    //2.5 maybe add MORE auxins in the sphere area
 
+    private void FindLocalCells()
+    {
+        localCells = new List<Cell>();
+        for (int i = 0; i < Cells.Count; i++)
+        {
+            float dist = Vector3.Distance(Cells[i].transform.position, this.transform.position);
+            if (dist < 5)
+            {
+                localCells.Add(Cells[i]);
+            }
+        }
+        Debug.Log("local cells found");
+    }
+
+    public IEnumerator CreateMarkers(List<Cell> cells, List<Auxin> auxins)
+    {
+        Debug.Log("create markers start");
+        _auxinsContainer = new GameObject("Markers").transform;
+        _cellSize = cells[0].transform.localScale.x;
+
+        int initsize = auxins.Count;
+
+        //_maxMarkersPerCell = Mathf.RoundToInt(MarkerDensity / (MarkerRadius * MarkerRadius));
+
+        // Generate a number of markers for each Cell
+        for (int c = 0; c < cells.Count; c++)
+        {
+
+            StartCoroutine(PopulateCell(cells[c], auxins, c));
+        }
+
+        int endsize = auxins.Count;
+
+        Debug.Log(initsize + " -> " + endsize);
+
+        yield break;
+    }
+
+    private IEnumerator PopulateCell(Cell cell, List<Auxin> auxins, int cellIndex)
+    {
+        Debug.Log("populate cell start");
+
+        float cellHalfSize = (_cellSize / 2.0f) * (1.0f - (MarkerRadius / 2f));
+
+        // Set this counter to break the loop if it is taking too long (maybe there is no more space)
+        int _tries = 0;
+
+        _maxMarkersPerCell = Mathf.RoundToInt(MarkerDensity / (MarkerRadius * MarkerRadius));
+
+
+        for (int i = 0; i < _maxMarkersPerCell; i++)
+        {
+            // If counter is above maxMarkers * 5, breaks the sequence for this Cell
+            if (_tries > _maxMarkersPerCell * 5)
+                break;
+
+            // Candidate position for new Marker
+            float x = Random.Range(-cellHalfSize, cellHalfSize);
+            float z = Random.Range(-cellHalfSize, cellHalfSize);
+            Vector3 targetPosition = new Vector3(x, 0f, z) + cell.transform.position;
+
+            //if (HasObstacleNearby(targetPosition) || HasMarkersNearby(targetPosition, cell.Auxins)
+            //    || !IsOnNavmesh(targetPosition))
+            //{
+            //    _tries++;
+            //    i--;
+            //    continue;
+            //}
+
+            // Creates new Marker and sets its data
+            Auxin newMarker = Instantiate(auxinPrefab, targetPosition, Quaternion.identity, _auxinsContainer);
+            newMarker.transform.localScale = Vector3.one * MarkerRadius;
+            newMarker.name = "NewMarker [" + cellIndex + "][" + i + "]";
+            newMarker.Cell = cell;
+            newMarker.Position = targetPosition;
+            newMarker.ShowMesh(SceneController.ShowAuxins);
+
+            auxins.Add(newMarker);
+            cell.Auxins.Add(newMarker);
+
+
+
+            // Reset the tries counter
+            _tries = 0;
+        }
+        yield break;
+    }
 
     //3. after most of the agents are around the sphere start sending some of them to the middle
     //3.5 test collision(?) between them and send them in opposite directions

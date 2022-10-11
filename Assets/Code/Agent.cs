@@ -20,6 +20,7 @@ namespace Biocrowds.Core
 
 
         //color
+        private Color color;
         public float rModifier, gModifier, bModifier;
 
         //agent radius
@@ -370,7 +371,56 @@ namespace Biocrowds.Core
             }
         }
 
-        
+
+        public void FindNearAuxinsAlt()
+        {
+            //clear them all, for obvious reasons
+            _auxins.Clear();
+
+            //get all auxins on my cell
+            List<Auxin> cellAuxins = _currentCell.Auxins;
+            
+            //iterate all cell auxins to check distance between auxins and agent
+            for (int i = 0; i < cellAuxins.Count; i++)
+            {
+                //see if the distance between this agent and this auxin is smaller than the actual value, and inside agent radius
+                float distanceSqr = (transform.position - cellAuxins[i].Position).sqrMagnitude;
+
+
+                //compara o produto distancia x calmo do agente dono da auxina com o que quer pegar
+                //caso não tenha agente dono da auxina A2 fica como 1
+                if (cellAuxins[i].IsTaken == true)
+                {
+                    GameObject otherAgent = cellAuxins[i].Agent.gameObject;
+                }
+
+                //if (distance < cellAuxins[i].GetMinDistance() && distance <= agentRadius && !cellAuxins[i].takenByRuler)
+                if (distanceSqr < cellAuxins[i].MinDistance && distanceSqr <= agentRadius)
+                {
+                    //take the auxin!!
+                    //if this auxin already was taken, need to remove it from the agent who had it
+                    if (cellAuxins[i].IsTaken == true)
+                    {
+                        cellAuxins[i].Agent.Auxins.Remove(cellAuxins[i]);
+                    }
+                    //auxin is taken
+                    cellAuxins[i].IsTaken = true;
+                    //change the color (visual purpose)
+                    //cellAuxins[i].material.color = color;
+
+                    //auxin has agent
+                    cellAuxins[i].Agent = this;
+                    //update min distance
+                    cellAuxins[i].MinDistance = distanceSqr;
+                    //update my auxins
+                    _auxins.Add(cellAuxins[i]);
+                }
+            }
+
+            FindCell();
+            
+        }
+
 
         //find all auxins near him (Voronoi Diagram)
         //call this method from game controller, to make it sequential for each agent
@@ -490,7 +540,10 @@ namespace Biocrowds.Core
                 pDistToCellSqr = distanceToNeighbourCell;
                 _currentCell = pCell;
             }
+
         }
+
+
         public bool IsAtCurrentGoal()
         {
             //Debug.Log(name + " : " + Vector3.Distance(transform.position, _goalPosition));
@@ -508,5 +561,16 @@ namespace Biocrowds.Core
                 goalsList[goalsList.Count - 1].transform.position.z);
             return (Vector2.Distance(agentPos, goalPos) <= goalDistThreshold);
         }
+
+        //public Color GetColor()
+        //{
+        //    return this.transform.GetChild(2).GetComponent<Renderer>().material.GetColor();
+        //}
+        public void SetColorToRed()
+        {
+            this.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        }
+
+
     }
 }
