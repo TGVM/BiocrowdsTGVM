@@ -29284,7 +29284,13 @@ MonoBehaviour:
   - {fileID: 679186784}
   agentsList: []
   sphereColl: {fileID: 1405405460}
+  Auxins: []
+  Cells: []
   Agents: []
+  MarkerRadius: 0.1
+  MarkerDensity: 0.65
+  auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
+    type: 3}
 --- !u!4 &1407919617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3211918698737073731, guid: bb2431132316b8041a8a6879b436a83a,

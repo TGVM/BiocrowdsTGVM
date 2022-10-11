@@ -79,7 +79,7 @@ public class Sphere : MonoBehaviour
             FindAgents();
             //DisableAuxins();
             OpenMoshpit();
-            CreateMarkers(localCells, _world.Auxins);
+            CreateMoreMarkers(localCells, _world.Auxins); //not calling method ???????
         }
     }
 
@@ -175,7 +175,7 @@ public class Sphere : MonoBehaviour
         Debug.Log("local cells found");
     }
 
-    public IEnumerator CreateMarkers(List<Cell> cells, List<Auxin> auxins)
+    public IEnumerator CreateMoreMarkers(List<Cell> cells, List<Auxin> auxins)
     {
         Debug.Log("create markers start");
         _auxinsContainer = new GameObject("Markers").transform;
@@ -189,7 +189,7 @@ public class Sphere : MonoBehaviour
         for (int c = 0; c < cells.Count; c++)
         {
 
-            StartCoroutine(PopulateCell(cells[c], auxins, c));
+            StartCoroutine(PopulateLocalCell(cells[c], auxins, c));
         }
 
         int endsize = auxins.Count;
@@ -199,7 +199,7 @@ public class Sphere : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator PopulateCell(Cell cell, List<Auxin> auxins, int cellIndex)
+    private IEnumerator PopulateLocalCell(Cell cell, List<Auxin> auxins, int cellIndex)
     {
         Debug.Log("populate cell start");
 
@@ -248,6 +248,10 @@ public class Sphere : MonoBehaviour
         }
         yield break;
     }
+
+    //OBS: the way it works now, if there's not many agents behind the back part of the circle, they open the moshpit just fine,
+    //because they have space to move
+
 
     //3. after most of the agents are around the sphere start sending some of them to the middle
     //3.5 test collision(?) between them and send them in opposite directions
