@@ -37,6 +37,7 @@ namespace Biocrowds.Core
         public float sphWeight;
         public float sphDist;
 
+        public bool reverse = false;
         
 
         //goal
@@ -319,30 +320,19 @@ namespace Biocrowds.Core
             //weight for creating moshpit
             float wMP = 0.0f;
 
-            //Debug.Log(Sphere.transform.position.ToString());
-
-            //if auxin is inside sphere wMP gets a higher value to subtract from weight
-            //if (moshpit)
-            //{
-            //    //Debug.Log("mp");
-            //    //Debug.Log(SphereMP.transform.position);
-            //    try
-            //    {
-            //        float dist = Vector3.Distance(_auxins[pRelationIndex].Position, SphereMP.transform.position);
-            //        if (dist < sphDist)
-            //        {
-            //            wMP = sphWeight;
-            //        }
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        Debug.LogWarning(e.Message.ToString());
-            //    }
-            //}
+            float result = 0f;
             
-
             //return the formula, defined in thesis
-            return (float)((1.0 / (1.0 + Ymodule)) * (1.0 + ((dot) / (Xmodule * Ymodule))) - wMP);
+            if (reverse)
+            {
+                result = (float)((1.0 / (1.0 + Ymodule)) * (1.0 + ((dot) / (Xmodule * Ymodule))) - wMP);
+                result = 1 - result;
+            }
+            else {
+                result = (float)((1.0 / (1.0 + Ymodule)) * (1.0 + ((dot) / (Xmodule * Ymodule))) - wMP);
+            }
+
+            return result;
         }
 
         //calculate speed vector    
@@ -569,6 +559,10 @@ namespace Biocrowds.Core
         public void SetColorToRed()
         {
             this.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        }
+
+        public void ChangeReverse() {
+            this.reverse = !reverse;
         }
 
 

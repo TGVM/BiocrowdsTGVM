@@ -21,7 +21,7 @@ public class Sphere : MonoBehaviour
     public List<Agent> agentsList = new List<Agent>();
 
     public SphereCollider sphereColl;
-    public List<Auxin> Auxins;
+    public List<Auxin> localAuxins;
     public List<Cell> Cells;
     private List<Cell> localCells;
 
@@ -45,6 +45,10 @@ public class Sphere : MonoBehaviour
 
     public Auxin auxinPrefab;
 
+    [SerializeField]
+    private MarkerSpawner _markerSpawner = null;
+    [Header("Simulation Configuration")]
+    public SimulationConfiguration.MarkerSpawnMethod markerSpawnMethod;
 
     private void Start()
     {
@@ -56,9 +60,6 @@ public class Sphere : MonoBehaviour
     {
         Cells = _world.Cells;
         FindLocalCells();
-        //FindNearAuxins();
-        //Agents = _world.Agents;
-        //FindAgents();
     }
 
     // Update is called once per frame
@@ -77,9 +78,10 @@ public class Sphere : MonoBehaviour
             Debug.Log("trigger");
             Agents = World.Agents;
             FindAgents();
-            //DisableAuxins();
             OpenMoshpit();
-            CreateMoreMarkers(localCells, _world.Auxins); //not calling method ???????
+            localAuxins = new List<Auxin>();
+            // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
+            MarkersAux();
         }
     }
 
@@ -128,36 +130,61 @@ public class Sphere : MonoBehaviour
         Agents = myAgents;
     }
 
-    //2. once the trigger moshpit is activated find new goals near the sphere for those agents 
-    private void OpenMoshpit(){
-        for (int i=0; i<Agents.Count; i++)
+    //2. use one "reversed goal", once trigger is activated, agents inside the sphere will try going away from this goal
+    private void OpenMoshpit()
+    {
+        for (int i = 0; i < Agents.Count; i++)
         {
-            GameObject newGoal = null;
+            GameObject newGoal = moshpitGoalList[0];
 
             //nearest method
-            float minDist = Mathf.Infinity;
-            Vector3 currentPos = Agents[i].transform.position;
-            foreach (GameObject g in moshpitGoalList)
-            {
-                float dist = Vector3.Distance(g.transform.position, currentPos);
-                if (dist < minDist)
-                {
-                    newGoal = g;
-                    minDist = dist;
-                }
-            }
+            //foreach (GameObject g in moshpitGoalList)
+            //{
+            //    newGoal = g;
+            //}
             // Debug.Log(Agents[i].name + " new goal " + newGoal.name);
-            //create the "panic" system for agents to close the gaps between them
-            // Agents[i].agentRadius = 0.5f;
             Agents[i].agentRadius = Agents[i].agentRadius / 4;
             Agents[i].AddGoal(newGoal);
             Agents[i].SkipGoal();
+
+            Agents[i].ChangeReverse();
             Agents[i].SetColorToRed();
-            
 
         }
         Debug.Log("mosh begins");
     }
+
+    //2(alt). once the trigger moshpit is activated find new goals near the sphere for those agents 
+    //private void OpenMoshpit()
+    //{
+    //    for (int i = 0; i < Agents.Count; i++)
+    //    {
+    //        GameObject newGoal = null;
+
+    //        //nearest method
+    //        float minDist = Mathf.Infinity;
+    //        Vector3 currentPos = Agents[i].transform.position;
+    //        foreach (GameObject g in moshpitGoalList)
+    //        {
+    //            float dist = Vector3.Distance(g.transform.position, currentPos);
+    //            if (dist < minDist)
+    //            {
+    //                newGoal = g;
+    //                minDist = dist;
+    //            }
+    //        }
+    //        // Debug.Log(Agents[i].name + " new goal " + newGoal.name);
+    //        //create the "panic" system for agents to close the gaps between them
+    //        // Agents[i].agentRadius = 0.5f;
+    //        Agents[i].agentRadius = Agents[i].agentRadius / 4;
+    //        Agents[i].AddGoal(newGoal);
+    //        Agents[i].SkipGoal();
+    //        Agents[i].SetColorToRed();
+
+
+    //    }
+    //    Debug.Log("mosh begins");
+    //}
 
     //2.5 maybe add MORE auxins in the sphere area
 
@@ -174,6 +201,16 @@ public class Sphere : MonoBehaviour
         }
         Debug.Log("local cells found");
     }
+
+    
+    IEnumerator MarkersAux()
+    {
+        var markerSpawnerMethods = transform.GetComponentsInChildren<MarkerSpawner>();
+        _markerSpawner = markerSpawnerMethods[0];
+        yield return StartCoroutine(CreateMoreMarkers(localCells, localAuxins));
+        yield return StartCoroutine(_markerSpawner.CreateMarkers(localCells, localAuxins));
+    }
+
 
     public IEnumerator CreateMoreMarkers(List<Cell> cells, List<Auxin> auxins)
     {
