@@ -22,6 +22,7 @@ public class Sphere : MonoBehaviour
 
     public SphereCollider sphereColl;
     public List<Auxin> localAuxins;
+    public List<Auxin> Auxins;
     public List<Cell> Cells;
     private List<Cell> localCells;
 
@@ -80,8 +81,9 @@ public class Sphere : MonoBehaviour
             FindAgents();
             OpenMoshpit();
             localAuxins = new List<Auxin>();
+            addMoreMarkers();
             // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
-            MarkersAux();
+            // MarkersAux();
         }
     }
 
@@ -151,7 +153,6 @@ public class Sphere : MonoBehaviour
             Agents[i].SetColorToRed();
 
         }
-        Debug.Log("mosh begins");
     }
 
     //2(alt). once the trigger moshpit is activated find new goals near the sphere for those agents 
@@ -202,14 +203,22 @@ public class Sphere : MonoBehaviour
         Debug.Log("local cells found");
     }
 
-    
-    IEnumerator MarkersAux()
+    public void addMoreMarkers()
     {
-        var markerSpawnerMethods = transform.GetComponentsInChildren<MarkerSpawner>();
-        _markerSpawner = markerSpawnerMethods[0];
-        yield return StartCoroutine(CreateMoreMarkers(localCells, localAuxins));
-        yield return StartCoroutine(_markerSpawner.CreateMarkers(localCells, localAuxins));
+        //delete markers nearby
+        Debug.Log("create markers start");
+        _world.LoadWorld();
+
     }
+
+
+    //IEnumerator MarkersAux()
+    //{
+    //    var markerSpawnerMethods = transform.GetComponentsInChildren<MarkerSpawner>();
+    //    _markerSpawner = markerSpawnerMethods[0];
+    //    yield return StartCoroutine(CreateMoreMarkers(localCells, localAuxins));
+    //    yield return StartCoroutine(_markerSpawner.CreateMarkers(localCells, localAuxins));
+    //}
 
 
     public IEnumerator CreateMoreMarkers(List<Cell> cells, List<Auxin> auxins)
@@ -315,28 +324,28 @@ public class Sphere : MonoBehaviour
 
 
     //2. search within those cells which auxins are inside sphere and register those auxins
-    //public void FindNearAuxins()
-    //{
-    //    //clear them all, for obvious reasons
-    //    Auxins.Clear();
+    public void FindNearAuxins()
+    {
+        //clear them all, for obvious reasons
+        Auxins.Clear();
 
-    //    for(int i = 0; i < localCells.Count; i++)
-    //    {
-    //        //get all auxins on my cell
-    //        List<Auxin> cellAuxins = localCells[i].Auxins;
+        for (int i = 0; i < localCells.Count; i++)
+        {
+            //get all auxins on my cell
+            List<Auxin> cellAuxins = localCells[i].Auxins;
 
-    //        //iterate all cell auxins to check distance between auxins and sphere
-    //        for (int j = 0; j < cellAuxins.Count; j++)
-    //        {
-    //            //see if the distance between this sphere and this auxin is smaller than the actual value, and inside agent radius
-    //            float dist = Vector3.Distance(cellAuxins[j].transform.position, this.transform.position);
-    //            if (dist < 4)
-    //            {
-    //                Auxins.Add(cellAuxins[j]);
-    //            }
-    //        }
-    //    }
-    //}
+            //iterate all cell auxins to check distance between auxins and sphere
+            for (int j = 0; j < cellAuxins.Count; j++)
+            {
+                //see if the distance between this sphere and this auxin is smaller than the actual value, and inside agent radius
+                float dist = Vector3.Distance(cellAuxins[j].transform.position, this.transform.position);
+                if (dist < 4)
+                {
+                    Auxins.Add(cellAuxins[j]);
+                }
+            }
+        }
+    }
 
 
     //4. have a trigger activated with world.moshpit
@@ -344,15 +353,15 @@ public class Sphere : MonoBehaviour
 
 
     //5. disable registered auxins when moshpit is true
-    //private void DisableAuxins()
-    //{
-    //    foreach(Auxin a in Auxins)
-    //    {
-    //        a.gameObject.SetActive(!moshpit);
-    //        a.isActive = !moshpit;
-    //    }
+    private void DisableAuxins()
+    {
+        foreach (Auxin a in Auxins)
+        {
+            a.gameObject.SetActive(!moshpit);
+            a.isActive = !moshpit;
+        }
 
-    //}
+    }
 
 
 
