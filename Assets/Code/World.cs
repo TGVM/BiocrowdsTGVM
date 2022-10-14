@@ -178,7 +178,7 @@ namespace Biocrowds.Core
             //wait a little bit to start moving
             yield return new WaitForSeconds(1.0f);
             _isReady = true;
-            Debug.Break();
+            // Debug.Break();
         }
 
         private IEnumerator CreateCells()
