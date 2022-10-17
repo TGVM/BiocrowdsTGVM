@@ -80,7 +80,7 @@ public class Sphere : MonoBehaviour
         moshpit = SceneController.Moshpit;
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
-            Debug.Log("trigger");
+            //Debug.Log("trigger");
             Agents = World.Agents;
             FindAgents();
             OpenMoshpit();
@@ -90,11 +90,23 @@ public class Sphere : MonoBehaviour
             // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
             // MarkersAux();
             Invoke("selectAgents", 15);
-            //selectAgents();
+            Debug.Log("auxMiddle Call");
+            StartCoroutine(auxMiddle());
+            
         }
     }
 
-
+   public IEnumerator auxMiddle()
+    {
+        yield return new WaitForSeconds(15);
+        Debug.Log("auxMiddle Start");
+        for (int i = 0; i <= Random.Range(0, 5); i++)
+        {
+            Debug.Log("goToMiddle called"); 
+            goToMiddle();
+            
+        }
+    }
 
     /*plan 2*/
     //1. find out which agents are inside the sphere
@@ -118,7 +130,7 @@ public class Sphere : MonoBehaviour
             }
         }
         Agents = myAgents;
-        Debug.Log("agentes afetados: " + agentcount);
+        //Debug.Log("agentes afetados: " + agentcount);
     }
 
     //finding far from goal
@@ -178,13 +190,13 @@ public class Sphere : MonoBehaviour
                 localCells.Add(Cells[i]);
             }
         }
-        Debug.Log("local cells found");
+        //Debug.Log("local cells found");
     }
 
     public void addMoreMarkers()
     {
         //delete markers nearby
-        Debug.Log("create markers start");
+        //Debug.Log("create markers start");
         _world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
         //falar com o Gabriel para ver como arrumar isso
     }
@@ -210,6 +222,15 @@ public class Sphere : MonoBehaviour
             }
         }
 
+    }
+
+    public void goToMiddle() {
+        int i = Random.Range(0, moshAgents.Count);
+        if (moshAgents[i].reverse)
+        {
+            moshAgents[i].ChangeReverse();
+            moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+        }
     }
 
     //IEnumerator MarkersAux()
