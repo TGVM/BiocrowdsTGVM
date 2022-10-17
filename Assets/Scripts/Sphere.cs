@@ -29,6 +29,8 @@ public class Sphere : MonoBehaviour
     public List<Agent> Agents;
     private List<Agent> myAgents;
 
+    private List<Agent> moshAgents;
+
     private bool mpTemp = false;
     private bool moshpit = false;
     private bool loadSph = false;
@@ -45,6 +47,8 @@ public class Sphere : MonoBehaviour
     protected int _maxMarkersPerCell;
 
     public Auxin auxinPrefab;
+
+    private float lesserDist = Mathf.Infinity;
 
     [SerializeField]
     private MarkerSpawner _markerSpawner = null;
@@ -85,6 +89,8 @@ public class Sphere : MonoBehaviour
             DisableAuxins();
             // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
             // MarkersAux();
+            Invoke("selectAgents", 15);
+            //selectAgents();
         }
     }
 
@@ -103,11 +109,12 @@ public class Sphere : MonoBehaviour
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
-            if (dist <= 5)
+            if (dist <= 4)
             {
                 //Debug.Log("found" + Agents[i].name);
                 myAgents.Add(Agents[i]);
                 agentcount++;
+                if (dist < lesserDist) lesserDist = dist;
             }
         }
         Agents = myAgents;
@@ -178,18 +185,32 @@ public class Sphere : MonoBehaviour
     {
         //delete markers nearby
         Debug.Log("create markers start");
-        _world.LoadWorld();
-
+        _world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
+        //falar com o Gabriel para ver como arrumar isso
     }
 
 
 
-    //OBS: the way it works now, if there's not many agents behind the back part of the circle, they open the moshpit just fine,
-    //because they have space to move
-
-
     //3. after most of the agents are around the sphere start sending some of them to the middle
     //3.5 test collision(?) between them and send them in opposite directions
+
+
+    public void selectAgents() {
+        moshAgents = new List<Agent>();
+        Vector3 s = this.transform.position;
+        s.x -= 1;
+
+        for(int i = 0; i<Agents.Count; i++)
+        {
+            float dist = Vector3.Distance(Agents[i].transform.position, s);
+            if (dist < lesserDist + 2.5)
+            {
+                moshAgents.Add(Agents[i]);
+                Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+            }
+        }
+
+    }
 
     //IEnumerator MarkersAux()
     //{
