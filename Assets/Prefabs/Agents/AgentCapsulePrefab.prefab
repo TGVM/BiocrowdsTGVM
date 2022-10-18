@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 33000010769959492}
   - component: {fileID: 23000011001940770}
   - component: {fileID: 114000011849109640}
-  m_Layer: 0
+  - component: {fileID: 1243295582857106253}
+  m_Layer: 3
   m_Name: AgentCapsulePrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -59,6 +60,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,6 +85,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &114000011849109640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,9 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f0e437f3560b9469af2f58af18340c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rModifier: 0
+  gModifier: 0
+  bModifier: 0
   agentRadius: 0
   _velocity: {x: 0, y: 0, z: 0}
   _maxSpeed: 1.5
+  SphereMP: {fileID: 0}
+  moshpit: 0
+  sphWeight: 0
+  sphDist: 0
+  reverse: 0
+  reflect: 0
   Goal: {fileID: 0}
   goalsList: []
   goalsWaitList: []
@@ -111,6 +123,22 @@ MonoBehaviour:
   _visualAgent: {fileID: 0}
   _distAuxin: []
   auxinCount: 0
+--- !u!54 &1243295582857106253
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011939965686}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &5446720405851300859
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +195,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -191,6 +220,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &8079923288021779760
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -261,6 +291,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -285,6 +316,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &4117776193696103310
 CapsuleCollider:
   m_ObjectHideFlags: 0

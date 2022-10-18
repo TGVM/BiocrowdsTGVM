@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Biocrowds.Core;
+//using System;
 
 public class Sphere : MonoBehaviour
 {
@@ -29,12 +30,21 @@ public class Sphere : MonoBehaviour
     public List<Agent> Agents;
     private List<Agent> myAgents;
 
-    private List<Agent> moshAgents;
+    public List<Agent> moshAgents;
 
+    public List<Agent> MoshAgents
+    {
+        get { return moshAgents; }
+    }
+
+    private bool moshAreaActive = false;
+    //private bool maaTemp = false;
     private bool mpTemp = false;
     private bool moshpit = false;
     private bool loadSph = false;
     private bool ltemp = false;
+
+    
 
     //radius for auxin collide
     public float MarkerRadius = 0.1f;
@@ -48,12 +58,12 @@ public class Sphere : MonoBehaviour
 
     public Auxin auxinPrefab;
 
-    private float lesserDist = Mathf.Infinity;
+    public float lesserDist = Mathf.Infinity;
 
-    [SerializeField]
-    private MarkerSpawner _markerSpawner = null;
-    [Header("Simulation Configuration")]
-    public SimulationConfiguration.MarkerSpawnMethod markerSpawnMethod;
+    //[SerializeField]
+    //private MarkerSpawner _markerSpawner = null;
+    //[Header("Simulation Configuration")]
+    //public SimulationConfiguration.MarkerSpawnMethod markerSpawnMethod;
 
     private void Start()
     {
@@ -86,25 +96,32 @@ public class Sphere : MonoBehaviour
             OpenMoshpit();
             localAuxins = new List<Auxin>();
             addMoreMarkers();
-            DisableAuxins();
+            //DisableAuxins();
             // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
             // MarkersAux();
             Invoke("selectAgents", 15);
-            Debug.Log("auxMiddle Call");
             StartCoroutine(auxMiddle());
             
         }
+
+        //if (moshAreaActive)
+        //{
+        //    //maaTemp = moshAreaActive;
+        //    moshArea();
+        //}
     }
 
-   public IEnumerator auxMiddle()
+    
+
+    public IEnumerator auxMiddle()
     {
         yield return new WaitForSeconds(15);
-        Debug.Log("auxMiddle Start");
-        for (int i = 0; i <= Random.Range(0, 5); i++)
+        moshAreaActive = true;
+        for (int i = 0; i <= Random.Range(5, 15); i++)
         {
-            Debug.Log("goToMiddle called"); 
             goToMiddle();
-            
+            //moshArea();
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -195,8 +212,6 @@ public class Sphere : MonoBehaviour
 
     public void addMoreMarkers()
     {
-        //delete markers nearby
-        //Debug.Log("create markers start");
         _world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
         //falar com o Gabriel para ver como arrumar isso
     }
@@ -212,13 +227,13 @@ public class Sphere : MonoBehaviour
         Vector3 s = this.transform.position;
         s.x -= 1;
 
-        for(int i = 0; i<Agents.Count; i++)
+        for(int i = 0; i<World.Agents.Count; i++)
         {
-            float dist = Vector3.Distance(Agents[i].transform.position, s);
-            if (dist < lesserDist + 2.5)
+            float dist = Vector3.Distance(World.Agents[i].transform.position, s);
+            if (dist < lesserDist + 2)
             {
-                moshAgents.Add(Agents[i]);
-                Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                moshAgents.Add(World.Agents[i]);
+                World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
             }
         }
 
@@ -228,10 +243,109 @@ public class Sphere : MonoBehaviour
         int i = Random.Range(0, moshAgents.Count);
         if (moshAgents[i].reverse)
         {
+            moshAgents[i].Sphere = this;
             moshAgents[i].ChangeReverse();
             moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+            //moshAgents[i].reflect = true;
+            moshArea(moshAgents[i]);
         }
     }
+
+
+    // pass list of moshAgents to Agent.cs so it can find 
+    // the nearest one.
+    // save distance when opening space for threshold of when 
+    // it needs to stop repulsion.
+    // add repulsion to agents.
+    //get moshArea sphere and add repulsion code there
+    //make a trigger on update to activate moshArea method
+
+    //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
+    void moshArea(Agent agnt)
+    {
+        //Transform ma = this.transform.GetChild(0);
+
+        var _agents = FindAgentsWithinDistance(1.5f, agnt.transform.position);
+
+        foreach (var collider in _agents)
+        {
+            if (collider.Equals(agnt))
+                continue;
+            
+            Rigidbody body = collider.GetComponent<Rigidbody>();
+
+            if (body == null)
+                continue;
+
+            Vector3 direction = agnt.transform.position - body.position;
+
+            float distance = direction.magnitude;
+
+            direction = direction.normalized;
+
+            if (distance < lesserDist)
+                continue;
+
+            float forceRate = (0.25f / distance);   //adjust value
+
+            body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Impulse);
+
+            float tmini = Time.time;
+            float tmexp = tmini + 1;
+            //while(Time.time < tmexp)
+            //{
+            //    tmini++;
+            //}
+            stopMoving(body);
+        }
+
+    }
+
+
+
+    private List<Agent> FindAgentsWithinDistance(float _dist, Vector3 _pos)
+    {
+        List<Agent> _centerAgents = new List<Agent>();
+        Transform ma = this.transform.GetChild(0);
+
+        //Vector3 _pos = new Vector3(ma.position.x, 0f, ma.position.z);
+        for (int i = 0; i < World.Agents.Count; i++)
+        {
+            if (Vector3.Distance(_pos, World.Agents[i].transform.position) <= _dist)
+                _centerAgents.Add(World.Agents[i]);
+        }
+        return _centerAgents;
+    }
+
+    private void stopMoving(Rigidbody rb) {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
+
+    void findNearestAgent()
+    {
+        Vector3 a = this.transform.position;
+        GameObject other = this.gameObject;
+        for (int i = 0; i < moshAgents.Count; i++)
+        {
+            float dist = Vector3.Distance(moshAgents[i].transform.position, a);
+            if (dist < lesserDist)
+            {
+                lesserDist = dist;
+                other = moshAgents[i].gameObject;
+            }
+        }
+
+    }
+
+
+
+
+    //ONLY COMMENTS BELLOW THAT LINE
+    //----------------------------------------------------------------------
+
+
 
     //IEnumerator MarkersAux()
     //{
@@ -369,28 +483,28 @@ public class Sphere : MonoBehaviour
 
 
     //2. search within those cells which auxins are inside sphere and register those auxins
-    public void FindNearAuxins()
-    {
-        //clear them all, for obvious reasons
-        Auxins.Clear();
+    //public void FindNearAuxins()
+    //{
+    //    //clear them all, for obvious reasons
+    //    Auxins.Clear();
 
-        for (int i = 0; i < localCells.Count; i++)
-        {
-            //get all auxins on my cell
-            List<Auxin> cellAuxins = localCells[i].Auxins;
+    //    for (int i = 0; i < localCells.Count; i++)
+    //    {
+    //        //get all auxins on my cell
+    //        List<Auxin> cellAuxins = localCells[i].Auxins;
 
-            //iterate all cell auxins to check distance between auxins and sphere
-            for (int j = 0; j < cellAuxins.Count; j++)
-            {
-                //see if the distance between this sphere and this auxin is smaller than the actual value, and inside agent radius
-                float dist = Vector3.Distance(cellAuxins[j].transform.position, this.transform.position);
-                if (dist < 4)
-                {
-                    Auxins.Add(cellAuxins[j]);
-                }
-            }
-        }
-    }
+    //        //iterate all cell auxins to check distance between auxins and sphere
+    //        for (int j = 0; j < cellAuxins.Count; j++)
+    //        {
+    //            //see if the distance between this sphere and this auxin is smaller than the actual value, and inside agent radius
+    //            float dist = Vector3.Distance(cellAuxins[j].transform.position, this.transform.position);
+    //            if (dist < 4)
+    //            {
+    //                Auxins.Add(cellAuxins[j]);
+    //            }
+    //        }
+    //    }
+    //}
 
 
     //4. have a trigger activated with world.moshpit
@@ -398,15 +512,15 @@ public class Sphere : MonoBehaviour
 
 
     //5. disable registered auxins when moshpit is true
-    private void DisableAuxins()
-    {
-        foreach (Auxin a in Auxins)
-        {
-            a.gameObject.SetActive(!moshpit);
-            a.isActive = !moshpit;
-        }
+    //private void DisableAuxins()
+    //{
+    //    foreach (Auxin a in Auxins)
+    //    {
+    //        a.gameObject.SetActive(!moshpit);
+    //        a.isActive = !moshpit;
+    //    }
 
-    }
+    //}
 
 
 

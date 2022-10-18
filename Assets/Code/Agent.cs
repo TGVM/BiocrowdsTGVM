@@ -38,7 +38,10 @@ namespace Biocrowds.Core
         public float sphDist;
 
         public bool reverse = false;
-        
+        public bool reflect = false;
+
+        private float lesserDist = Mathf.Infinity;
+
 
         //goal
         public GameObject Goal;
@@ -78,6 +81,13 @@ namespace Biocrowds.Core
         {
             get { return _world; }
             set { _world = value; }
+        }
+
+        private Sphere _sphere;
+        public Sphere Sphere
+        {
+            get { return _sphere; }
+            set { _sphere = value; }
         }
 
         private int _totalX;
@@ -149,14 +159,22 @@ namespace Biocrowds.Core
             }
         }
 
+
+        //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
         //private void Update()
         //{
-        //    moshpit = SceneController.Moshpit;
-        //    RegisterCallback<ChangeEvent<bool>>(OnBoolChangedEvent);
+
+
+        //    if (reflect)
+        //    {
+        //        findNearestAgent();
+
+
+        //    }
         //}
 
-       
 
+        
 
         /*void Update()
         {
