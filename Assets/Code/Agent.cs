@@ -161,20 +161,21 @@ namespace Biocrowds.Core
 
 
         //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
-        //private void Update()
-        //{
+        private void Update()
+        {
 
 
-        //    if (reflect)
-        //    {
-        //        findNearestAgent();
+            if (reflect && IsAtCurrentGoal())
+            {
+                Debug.Log("empurra");
+                Sphere.moshArea(this);
 
 
-        //    }
-        //}
+            }
+        }
 
 
-        
+
 
         /*void Update()
         {

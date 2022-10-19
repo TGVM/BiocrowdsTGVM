@@ -121,7 +121,7 @@ public class Sphere : MonoBehaviour
         {
             goToMiddle();
             //moshArea();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(Random.Range(0f, 1f));
         }
     }
 
@@ -225,12 +225,12 @@ public class Sphere : MonoBehaviour
     public void selectAgents() {
         moshAgents = new List<Agent>();
         Vector3 s = this.transform.position;
-        s.x -= 1;
+        s.x -= 0.5f;
 
         for(int i = 0; i<World.Agents.Count; i++)
         {
             float dist = Vector3.Distance(World.Agents[i].transform.position, s);
-            if (dist < lesserDist + 2)
+            if (dist < lesserDist + 2.3)
             {
                 moshAgents.Add(World.Agents[i]);
                 World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
@@ -246,8 +246,9 @@ public class Sphere : MonoBehaviour
             moshAgents[i].Sphere = this;
             moshAgents[i].ChangeReverse();
             moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
-            //moshAgents[i].reflect = true;
-            moshArea(moshAgents[i]);
+            moshAgents[i].reflect = true;
+            //timer(0.5f);
+            //moshArea(moshAgents[i]);
         }
     }
 
@@ -260,12 +261,12 @@ public class Sphere : MonoBehaviour
     //get moshArea sphere and add repulsion code there
     //make a trigger on update to activate moshArea method
 
-    //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
-    void moshArea(Agent agnt)
+    //repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
+    public void moshArea(Agent agnt)
     {
         //Transform ma = this.transform.GetChild(0);
 
-        var _agents = FindAgentsWithinDistance(1.5f, agnt.transform.position);
+        var _agents = FindAgentsWithinDistance(1f, agnt.transform.position);
 
         foreach (var collider in _agents)
         {
@@ -278,24 +279,20 @@ public class Sphere : MonoBehaviour
                 continue;
 
             Vector3 direction = agnt.transform.position - body.position;
+            direction.y = 0;
 
             float distance = direction.magnitude;
 
             direction = direction.normalized;
 
-            if (distance < lesserDist)
+            if (distance > 2)
                 continue;
 
-            float forceRate = (0.25f / distance);   //adjust value
+            float forceRate = (1f / distance);   //adjust value
 
-            body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Impulse);
+            body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Force);     //ver se impulse é o melhor modo
 
-            float tmini = Time.time;
-            float tmexp = tmini + 1;
-            //while(Time.time < tmexp)
-            //{
-            //    tmini++;
-            //}
+            timer(0.5f);
             stopMoving(body);
         }
 
@@ -339,7 +336,11 @@ public class Sphere : MonoBehaviour
 
     }
 
-
+    public IEnumerator timer(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        
+    }
 
 
     //ONLY COMMENTS BELLOW THAT LINE
