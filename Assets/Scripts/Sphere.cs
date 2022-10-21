@@ -273,12 +273,8 @@ public class Sphere : MonoBehaviour
             if (collider.Equals(agnt))
                 continue;
             
-            Rigidbody body = collider.GetComponent<Rigidbody>();
-
-            if (body == null)
-                continue;
-
-            Vector3 direction = agnt.transform.position - body.position;
+            
+            Vector3 direction = agnt.transform.position - collider.transform.position;
             direction.y = 0;
 
             float distance = direction.magnitude;
@@ -288,12 +284,11 @@ public class Sphere : MonoBehaviour
             if (distance > 2)
                 continue;
 
-            float forceRate = (1f / distance);   //adjust value
-
-            body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Force);     //ver se impulse é o melhor modo
-
+            collider.reverse = true;
+            collider.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
             timer(0.5f);
-            stopMoving(body);
+            collider.reverse = false;
+            collider.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
 
     }
@@ -347,6 +342,43 @@ public class Sphere : MonoBehaviour
     //----------------------------------------------------------------------
 
 
+
+    ////repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
+    //public void moshArea(Agent agnt)
+    //{
+    //    //Transform ma = this.transform.GetChild(0);
+
+    //    var _agents = FindAgentsWithinDistance(1f, agnt.transform.position);
+
+    //    foreach (var collider in _agents)
+    //    {
+    //        if (collider.Equals(agnt))
+    //            continue;
+
+    //        Rigidbody body = collider.GetComponent<Rigidbody>();
+
+    //        if (body == null)
+    //            continue;
+
+    //        Vector3 direction = agnt.transform.position - body.position;
+    //        direction.y = 0;
+
+    //        float distance = direction.magnitude;
+
+    //        direction = direction.normalized;
+
+    //        if (distance > 2)
+    //            continue;
+
+    //        float forceRate = (1f / distance);   //adjust value
+
+    //        body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Force);     //ver se impulse é o melhor modo
+
+    //        timer(0.5f);
+    //        stopMoving(body);
+    //    }
+
+    //}
 
     //IEnumerator MarkersAux()
     //{
