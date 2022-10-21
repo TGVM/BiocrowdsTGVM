@@ -167,7 +167,7 @@ namespace Biocrowds.Core
 
             if (reflect && IsAtCurrentGoal())
             {
-                Debug.Log("empurra");
+                //Debug.Log("empurra");
                 Sphere.moshArea(this);
 
 

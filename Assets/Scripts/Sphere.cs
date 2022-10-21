@@ -268,27 +268,29 @@ public class Sphere : MonoBehaviour
 
         var _agents = FindAgentsWithinDistance(1f, agnt.transform.position);
 
-        foreach (var collider in _agents)
-        {
-            if (collider.Equals(agnt))
-                continue;
-            
-            
-            Vector3 direction = agnt.transform.position - collider.transform.position;
-            direction.y = 0;
+        //foreach (var collider in Agents)
+        //{
+        if (_agents.Count > 0){
+            //if (collider.Equals(agnt))
+            //    continue;
 
-            float distance = direction.magnitude;
+            while (true) { 
+                Vector3 direction = agnt.transform.position - agnt.Goal.transform.position;
+                direction.y = 0;
 
-            direction = direction.normalized;
+                float distance = direction.magnitude;
 
-            if (distance > 2)
-                continue;
+                direction = direction.normalized;
 
-            collider.reverse = true;
-            collider.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-            timer(0.5f);
-            collider.reverse = false;
-            collider.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+                if (distance > 2)
+                    continue;
+
+                agnt.reverse = true;
+                agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+                //timer(1); esse timer ta travando a simulacao
+                agnt.reverse = false;
+                agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+            }
         }
 
     }
@@ -333,7 +335,7 @@ public class Sphere : MonoBehaviour
 
     public IEnumerator timer(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSecondsRealtime(seconds);
         
     }
 
