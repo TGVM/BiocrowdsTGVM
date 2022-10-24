@@ -99,7 +99,7 @@ public class Sphere : MonoBehaviour
             //DisableAuxins();
             // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
             // MarkersAux();
-            Invoke("selectAgents", 15);
+            Invoke("selectAgents", 10);
             StartCoroutine(auxMiddle());
             
         }
@@ -115,9 +115,9 @@ public class Sphere : MonoBehaviour
 
     public IEnumerator auxMiddle()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(10);
         moshAreaActive = true;
-        for (int i = 0; i <= Random.Range(5, 15); i++)
+        for (int i = 0; i <= Random.Range(7, 15); i++)
         {
             goToMiddle();
             //moshArea();
