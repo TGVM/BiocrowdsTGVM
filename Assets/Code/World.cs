@@ -148,6 +148,14 @@ namespace Biocrowds.Core
             StartCoroutine(SetupWorld());
         }
 
+        public void auxNewAuxinsMosh(List<Cell> cells) {
+            StartCoroutine(NewAuxinsForMoshpit(cells));
+        }
+
+        IEnumerator NewAuxinsForMoshpit(List<Cell> cells) {
+            yield return StartCoroutine(_markerSpawner.CreateMarkers(cells, _auxins));
+        }
+
         // Use this for initialization
         IEnumerator SetupWorld()
         {

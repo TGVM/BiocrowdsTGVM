@@ -69,7 +69,7 @@ public class SceneController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !initialized)
         {
             Debug.Log("Loading World");
-            Debug.Log("Press M to toggle the moshpit");
+            Debug.Log("Press M to start the moshpit");
             List<SpawnArea> _spawners = FindObjectsOfType<SpawnArea>().ToList();
             foreach (SpawnArea s in _spawners)
                 s.ShowMesh(ShowSpawnAreas);

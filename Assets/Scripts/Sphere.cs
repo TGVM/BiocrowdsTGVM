@@ -212,7 +212,8 @@ public class Sphere : MonoBehaviour
 
     public void addMoreMarkers()
     {
-        _world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
+        //_world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
+        _world.auxNewAuxinsMosh(localCells);
         //falar com o Gabriel para ver como arrumar isso
     }
 
@@ -261,40 +262,7 @@ public class Sphere : MonoBehaviour
     //get moshArea sphere and add repulsion code there
     //make a trigger on update to activate moshArea method
 
-    //repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
-    public void moshArea(Agent agnt)
-    {
-        //Transform ma = this.transform.GetChild(0);
-
-        var _agents = FindAgentsWithinDistance(1f, agnt.transform.position);
-
-        //foreach (var collider in Agents)
-        //{
-        if (_agents.Count > 0){
-            //if (collider.Equals(agnt))
-            //    continue;
-
-            while (true) { 
-                Vector3 direction = agnt.transform.position - agnt.Goal.transform.position;
-                direction.y = 0;
-
-                float distance = direction.magnitude;
-
-                direction = direction.normalized;
-
-                if (distance > 2)
-                    continue;
-
-                agnt.reverse = true;
-                agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-                //timer(1); esse timer ta travando a simulacao
-                agnt.reverse = false;
-                agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
-            }
-        }
-
-    }
-
+   
 
 
     private List<Agent> FindAgentsWithinDistance(float _dist, Vector3 _pos)
@@ -343,6 +311,40 @@ public class Sphere : MonoBehaviour
     //ONLY COMMENTS BELLOW THAT LINE
     //----------------------------------------------------------------------
 
+
+    //repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
+    //public void moshArea(Agent agnt)
+    //{
+    //    //Transform ma = this.transform.GetChild(0);
+
+    //    var _agents = FindAgentsWithinDistance(1f, agnt.transform.position);
+
+    //    //foreach (var collider in Agents)
+    //    //{
+    //    if (_agents.Count > 0){
+    //        //if (collider.Equals(agnt))
+    //        //    continue;
+
+    //        while (true) { 
+    //            Vector3 direction = agnt.transform.position - agnt.Goal.transform.position;
+    //            direction.y = 0;
+
+    //            float distance = direction.magnitude;
+
+    //            direction = direction.normalized;
+
+    //            if (distance > 2)
+    //                continue;
+
+    //            agnt.reverse = true;
+    //            agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+    //            //timer(1); esse timer ta travando a simulacao
+    //            agnt.reverse = false;
+    //            agnt.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+    //        }
+    //    }
+
+    //}
 
 
     ////repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
