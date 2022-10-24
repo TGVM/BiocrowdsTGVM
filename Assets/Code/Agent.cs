@@ -31,6 +31,8 @@ namespace Biocrowds.Core
         [SerializeField]
         private float _maxSpeed = 1.5f;
 
+
+
         //Moshpit Area
         public GameObject SphereMP;
         public bool moshpit;
@@ -39,6 +41,7 @@ namespace Biocrowds.Core
 
         public bool reverse = false;
         public bool reflect = false;
+        public float reflectThreshold;
 
         private float lesserDist = Mathf.Infinity;
 
@@ -167,11 +170,20 @@ namespace Biocrowds.Core
 
             if (reflect && IsAtCurrentGoal())
             {
-                //Debug.Log("empurra");
-                Sphere.moshArea(this);
-
-
+                reverse = true;
+                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
             }
+
+            Vector2 agentPos = new Vector2(transform.position.x, transform.position.z);
+            Vector2 goalPos = new Vector2(goalsList[goalIndex].transform.position.x,
+                goalsList[goalIndex].transform.position.z);
+
+            if (reflect && reverse && (Vector2.Distance(agentPos, goalPos) > reflectThreshold))
+            {
+                reverse = false;
+                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+            }
+
         }
 
 

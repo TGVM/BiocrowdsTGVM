@@ -20264,6 +20264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
+      propertyPath: REFLECT_THRESHOLD
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
+        type: 3}
       propertyPath: markerSpawnMethod
       value: 1
       objectReference: {fileID: 0}
@@ -20275,7 +20280,7 @@ PrefabInstance:
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
       propertyPath: GOAL_DISTANCE_THRESHOLD
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
