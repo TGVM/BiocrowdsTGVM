@@ -41,10 +41,11 @@ namespace Biocrowds.Core
 
         public bool reverse = false;
         public bool reflect = false;
-        public float reflectThreshold;
+        public float reflectThresholdMin;
+        public float reflectThresholdMax;
 
         private float lesserDist = Mathf.Infinity;
-
+        private float rt = 0f;
 
         //goal
         public GameObject Goal;
@@ -166,19 +167,20 @@ namespace Biocrowds.Core
         //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
         private void Update()
         {
-
+            
 
             if (reflect && IsAtCurrentGoal())
             {
                 reverse = true;
                 transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+                rt = UnityEngine.Random.Range(reflectThresholdMin, reflectThresholdMax);
             }
 
             Vector2 agentPos = new Vector2(transform.position.x, transform.position.z);
             Vector2 goalPos = new Vector2(goalsList[goalIndex].transform.position.x,
                 goalsList[goalIndex].transform.position.z);
 
-            if (reflect && reverse && (Vector2.Distance(agentPos, goalPos) > reflectThreshold))
+            if (reflect && reverse && (Vector2.Distance(agentPos, goalPos) > rt))
             {
                 reverse = false;
                 transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);

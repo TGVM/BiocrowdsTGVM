@@ -30,7 +30,8 @@ namespace Biocrowds.Core
         [SerializeField] private float GOAL_DISTANCE_THRESHOLD = 1.0f;
         [SerializeField] private float SPHERE_WEIGTH = 1.0f;
         [SerializeField] private float SPHERE_DISTANCE = 1.0f;
-        [SerializeField] private float REFLECT_THRESHOLD = 1.0f;
+        [SerializeField] private float REFLECT_THRESHOLD_MIN = 0.9f;
+        [SerializeField] private float REFLECT_THRESHOLD_MAX = 1.5f;
 
         public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
@@ -497,7 +498,9 @@ namespace Biocrowds.Core
             newAgent.CurrentCell = GetClosestCellToPoint(_pos);
             newAgent.agentRadius = AGENT_RADIUS;  //agent radius
             newAgent.goalDistThreshold = GOAL_DISTANCE_THRESHOLD;
-            newAgent.reflectThreshold = REFLECT_THRESHOLD;
+            newAgent.reflectThresholdMin = REFLECT_THRESHOLD_MIN;
+            newAgent.reflectThresholdMax = REFLECT_THRESHOLD_MAX;
+
 
             if (_isInitialSpawn)
             {
