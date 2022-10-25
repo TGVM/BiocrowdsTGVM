@@ -14,10 +14,7 @@ public class Sphere : MonoBehaviour
     }
 
     [Header("Moshpit Goals")]
-    //public int initialNumberOfAgents;
-    //public bool initialRemoveWhenGoalReached;
     public List<GameObject> moshpitGoalList;
-    //public List<float> initialWaitList;
 
     public List<Agent> agentsList = new List<Agent>();
 
@@ -38,7 +35,6 @@ public class Sphere : MonoBehaviour
     }
 
     private bool moshAreaActive = false;
-    //private bool maaTemp = false;
     private bool mpTemp = false;
     private bool moshpit = false;
     private bool loadSph = false;
@@ -60,10 +56,6 @@ public class Sphere : MonoBehaviour
 
     public float lesserDist = Mathf.Infinity;
 
-    //[SerializeField]
-    //private MarkerSpawner _markerSpawner = null;
-    //[Header("Simulation Configuration")]
-    //public SimulationConfiguration.MarkerSpawnMethod markerSpawnMethod;
 
     private void Start()
     {
@@ -90,25 +82,16 @@ public class Sphere : MonoBehaviour
         moshpit = SceneController.Moshpit;
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
-            //Debug.Log("trigger");
             Agents = World.Agents;
             FindAgents();
             OpenMoshpit();
             localAuxins = new List<Auxin>();
             addMoreMarkers();
-            //DisableAuxins();
-            // CreateMoreMarkers(localCells, localAuxins); //not calling method ???????
-            // MarkersAux();
             Invoke("selectAgents", 10);
             StartCoroutine(auxMiddle());
             
         }
 
-        //if (moshAreaActive)
-        //{
-        //    //maaTemp = moshAreaActive;
-        //    moshArea();
-        //}
     }
 
     
@@ -133,41 +116,21 @@ public class Sphere : MonoBehaviour
     private void FindAgents()
     {
         int agentcount = 0;
-        //Debug.Log("Finding");
         myAgents = new List<Agent>();
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
             if (dist <= 4)
             {
-                //Debug.Log("found" + Agents[i].name);
                 myAgents.Add(Agents[i]);
                 agentcount++;
                 if (dist < lesserDist) lesserDist = dist;
             }
         }
         Agents = myAgents;
-        //Debug.Log("agentes afetados: " + agentcount);
     }
 
-    //finding far from goal
-    //maybe get agents far from goal and outside the sphere
-    //send them farther from goal
-    private void FindAgents2()
-    {
-        //Debug.Log("Finding");
-        myAgents = new List<Agent>();
-        for (int i = 0; i < Agents.Count; i++)
-        {
-            float dist = Vector3.Distance(Agents[i].transform.position, Agents[i].Goal.transform.position);
-            if (dist > 2)
-            {
-                //Debug.Log("found" + Agents[i].name);
-                myAgents.Add(Agents[i]);
-            }
-        }
-        Agents = myAgents;
-    }
+    
 
     //2. use one "reversed goal", once trigger is activated, agents inside the sphere will try going away from this goal
     private void OpenMoshpit()
@@ -176,12 +139,6 @@ public class Sphere : MonoBehaviour
         {
             GameObject newGoal = moshpitGoalList[0];
 
-            //nearest method
-            //foreach (GameObject g in moshpitGoalList)
-            //{
-            //    newGoal = g;
-            //}
-            // Debug.Log(Agents[i].name + " new goal " + newGoal.name);
             Agents[i].agentRadius = Agents[i].agentRadius / 4;
             Agents[i].AddGoal(newGoal);
             Agents[i].SkipGoal();
@@ -191,11 +148,8 @@ public class Sphere : MonoBehaviour
 
         }
     }
-
     
-
     //2.5 maybe add MORE auxins in the sphere area
-
     private void FindLocalCells()
     {
         localCells = new List<Cell>();
@@ -207,22 +161,17 @@ public class Sphere : MonoBehaviour
                 localCells.Add(Cells[i]);
             }
         }
-        //Debug.Log("local cells found");
     }
 
     public void addMoreMarkers()
     {
-        //_world.LoadWorld();             //melhorar isso futuramente para só add marcadores ao redor do ponto escolhido, e não no mundo inteiro
         _world.auxNewAuxinsMosh(localCells);
-        //falar com o Gabriel para ver como arrumar isso
     }
 
 
 
     //3. after most of the agents are around the sphere start sending some of them to the middle
     //3.5 test collision(?) between them and send them in opposite directions
-
-
     public void selectAgents() {
         moshAgents = new List<Agent>();
         Vector3 s = this.transform.position;
@@ -248,8 +197,6 @@ public class Sphere : MonoBehaviour
             moshAgents[i].ChangeReverse();
             moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
             moshAgents[i].reflect = true;
-            //timer(0.5f);
-            //moshArea(moshAgents[i]);
         }
     }
 
@@ -261,9 +208,6 @@ public class Sphere : MonoBehaviour
     // add repulsion to agents.
     //get moshArea sphere and add repulsion code there
     //make a trigger on update to activate moshArea method
-
-   
-
 
     private List<Agent> FindAgentsWithinDistance(float _dist, Vector3 _pos)
     {
@@ -311,6 +255,23 @@ public class Sphere : MonoBehaviour
     //ONLY COMMENTS BELLOW THAT LINE
     //----------------------------------------------------------------------
 
+
+    //finding far from goal
+    //maybe get agents far from goal and outside the sphere
+    //send them farther from goal
+    //private void FindAgents2()
+    //{
+    //    myAgents = new List<Agent>();
+    //    for (int i = 0; i < Agents.Count; i++)
+    //    {
+    //        float dist = Vector3.Distance(Agents[i].transform.position, Agents[i].Goal.transform.position);
+    //        if (dist > 2)
+    //        {
+    //            myAgents.Add(Agents[i]);
+    //        }
+    //    }
+    //    Agents = myAgents;
+    //}
 
     //repulsion based on https://github.com/kleberandrade/attraction-repulsion-force-unity
     //public void moshArea(Agent agnt)

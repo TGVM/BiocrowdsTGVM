@@ -83,12 +83,7 @@ namespace Biocrowds.Core
         private Transform _agentsContainer;
         private int _newAgentID = 0;
 
-        //teste
-        //[Header("Visuals")]
-        //public Color colorMin, colorMax;
-        //public bool changesColor;
-        //public Color finalColorMin, finalColorMax;
-        //Renderer mr;
+        
 
         
         public List<Agent> Agents { 
@@ -197,7 +192,6 @@ namespace Biocrowds.Core
             Vector3 _spawnPos = new Vector3();
 
 
-            //          ONLY HALF OF THE DIMENSION??
 
             for (int i = 0; i < _dimension.x / 2; i++) //i + agentRadius * 2
             {
@@ -371,11 +365,7 @@ namespace Biocrowds.Core
             {
                 Agent a = _agents[i];
                 _agents[i].UpdateVisualAgent();
-                //mr = _agents[i].GetComponent<Renderer>();
-                //mr.material.color = new Color(mr.material.color.r + a.rModifier * Time.deltaTime,
-                //                                mr.material.color.g + a.gModifier * Time.deltaTime,
-                //                                mr.material.color.b + a.bModifier * Time.deltaTime);
-
+                
             }
 
 

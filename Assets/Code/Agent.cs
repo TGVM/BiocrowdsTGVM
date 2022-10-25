@@ -19,9 +19,6 @@ namespace Biocrowds.Core
         private const float UPDATE_NAVMESH_INTERVAL = 1.0f;
 
 
-        //color
-        private Color color;
-        public float rModifier, gModifier, bModifier;
 
         //agent radius
         public float agentRadius;
@@ -44,7 +41,6 @@ namespace Biocrowds.Core
         public float reflectThresholdMin;
         public float reflectThresholdMax;
 
-        private float lesserDist = Mathf.Infinity;
         private float rt = 0f;
 
         //goal
@@ -115,10 +111,7 @@ namespace Biocrowds.Core
 
         public int auxinCount;
 
-        //private void Awake()
-        //{
-        //    SphereMP = GameObject.FindGameObjectWithTag("sphere");
-        //}
+        
 
         void Start()
         {
@@ -585,10 +578,7 @@ namespace Biocrowds.Core
             return (Vector2.Distance(agentPos, goalPos) <= goalDistThreshold);
         }
 
-        //public Color GetColor()
-        //{
-        //    return this.transform.GetChild(2).GetComponent<Renderer>().material.GetColor();
-        //}
+        
         public void SetColorToRed()
         {
             this.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
