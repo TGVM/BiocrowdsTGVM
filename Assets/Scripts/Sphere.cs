@@ -99,7 +99,7 @@ public class Sphere : MonoBehaviour
         yield return new WaitForSeconds(10);
         moshAreaActive = true;
         alreadyUsed = new List<int>();
-        for (int i = 0; i <= _world.numberAgMosh; i++)
+        for (int i = 0; i < _world.numberAgMosh; i++)
         {
             goToMiddle();
             //moshArea();
