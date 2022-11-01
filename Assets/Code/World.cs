@@ -32,11 +32,13 @@ namespace Biocrowds.Core
         [SerializeField] private float SPHERE_DISTANCE = 1.0f;
         [SerializeField] private float REFLECT_THRESHOLD_MIN = 0.9f;
         [SerializeField] private float REFLECT_THRESHOLD_MAX = 1.5f;
+        //[SerializeField] private int NUMBER_OF_MOSH_AGENTS = 7;
 
         public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
         public static float SPHERE_DISTANCE_PUB = 1.0f;
         public static bool CellsReady = false;
+        public int numberAgMosh;
 
         [Header("Terrain Setting")]
         public MeshFilter planeMeshFilter;
@@ -133,7 +135,9 @@ namespace Biocrowds.Core
 
                 SPHERE_DISTANCE_PUB = SPHERE_DISTANCE;
                 SPHERE_WEIGTH_PUB = SPHERE_WEIGTH;
+                
             }
+            //numberAgMosh = NUMBER_OF_MOSH_AGENTS;
         }
 
         public void LoadWorld()

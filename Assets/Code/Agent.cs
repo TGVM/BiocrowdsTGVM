@@ -110,8 +110,8 @@ namespace Biocrowds.Core
         private Vector3 _dirAgentGoal; //diff between goal and agent
 
         public int auxinCount;
+        private float timePassed = 0.0f;
 
-        
 
         void Start()
         {
@@ -160,13 +160,23 @@ namespace Biocrowds.Core
         //repulsion based off https://github.com/kleberandrade/attraction-repulsion-force-unity
         private void Update()
         {
+
             
+            if (reflect && _velocity == Vector3.zero) {
+                timePassed += Time.deltaTime;
+            }
+            if (reflect && timePassed > 2) {
+                reverse = !reverse;
+                timePassed = 0.0f;
+            }
+            //para ver se o agente está parado usar _velocity == Vector3.ZERO
 
             if (reflect && IsAtCurrentGoal())
             {
                 reverse = true;
                 transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
                 rt = UnityEngine.Random.Range(reflectThresholdMin, reflectThresholdMax);
+                goalDistThreshold = 0.4f;
             }
 
             Vector2 agentPos = new Vector2(transform.position.x, transform.position.z);

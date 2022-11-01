@@ -20214,6 +20214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
+      propertyPath: numberAgMosh
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
+        type: 3}
       propertyPath: AUXIN_DENSITY
       value: 5
       objectReference: {fileID: 0}
@@ -20279,8 +20284,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
+      propertyPath: NUMBER_OF_MOSH_AGENTS
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
+        type: 3}
       propertyPath: GOAL_DISTANCE_THRESHOLD
-      value: 0.7
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
@@ -29704,8 +29714,8 @@ MonoBehaviour:
   moshpitGoalList:
   - {fileID: 742623434}
   agentsList: []
+  alreadyUsed: 
   sphereColl: {fileID: 1405405460}
-  localAuxins: []
   Auxins: []
   Cells: []
   Agents: []

@@ -17,9 +17,8 @@ public class Sphere : MonoBehaviour
     public List<GameObject> moshpitGoalList;
 
     public List<Agent> agentsList = new List<Agent>();
-
+    public List<int> alreadyUsed = new List<int>();
     public SphereCollider sphereColl;
-    public List<Auxin> localAuxins;
     public List<Auxin> Auxins;
     public List<Cell> Cells;
     private List<Cell> localCells;
@@ -85,7 +84,6 @@ public class Sphere : MonoBehaviour
             Agents = World.Agents;
             FindAgents();
             OpenMoshpit();
-            localAuxins = new List<Auxin>();
             addMoreMarkers();
             Invoke("selectAgents", 10);
             StartCoroutine(auxMiddle());
@@ -100,7 +98,8 @@ public class Sphere : MonoBehaviour
     {
         yield return new WaitForSeconds(10);
         moshAreaActive = true;
-        for (int i = 0; i <= Random.Range(7, 15); i++)
+        alreadyUsed = new List<int>();
+        for (int i = 0; i <= _world.numberAgMosh; i++)
         {
             goToMiddle();
             //moshArea();
@@ -116,11 +115,13 @@ public class Sphere : MonoBehaviour
     private void FindAgents()
     {
         int agentcount = 0;
+        float aux = _world.numberAgMosh / 10;
+
         myAgents = new List<Agent>();
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
-            if (dist <= 4)
+            if (dist <= 5 + aux)
             {
                 myAgents.Add(Agents[i]);
                 agentcount++;
@@ -156,7 +157,7 @@ public class Sphere : MonoBehaviour
         for (int i = 0; i < Cells.Count; i++)
         {
             float dist = Vector3.Distance(Cells[i].transform.position, this.transform.position);
-            if (dist < 5)
+            if (dist < 5.5)
             {
                 localCells.Add(Cells[i]);
             }
@@ -176,11 +177,11 @@ public class Sphere : MonoBehaviour
         moshAgents = new List<Agent>();
         Vector3 s = this.transform.position;
         s.x -= 0.5f;
-
-        for(int i = 0; i<World.Agents.Count; i++)
+        float aux = _world.numberAgMosh / 10;
+        for (int i = 0; i<World.Agents.Count; i++)
         {
             float dist = Vector3.Distance(World.Agents[i].transform.position, s);
-            if (dist < lesserDist + 2.3)
+            if (dist < lesserDist + 2.3 + aux)
             {
                 moshAgents.Add(World.Agents[i]);
                 World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
@@ -191,6 +192,12 @@ public class Sphere : MonoBehaviour
 
     public void goToMiddle() {
         int i = Random.Range(0, moshAgents.Count);
+        while (alreadyUsed.Contains(i) && alreadyUsed.Count < moshAgents.Count){
+            i = Random.Range(0, moshAgents.Count);
+        }
+        alreadyUsed.Add(i);
+
+
         if (moshAgents[i].reverse)
         {
             moshAgents[i].Sphere = this;
