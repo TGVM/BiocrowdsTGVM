@@ -80,7 +80,7 @@ public class SceneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M)) {
             //opens space on sphere area
-
+            Debug.Log("M pressed!");
             Moshpit = !Moshpit;
 
         }

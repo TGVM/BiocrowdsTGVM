@@ -167,6 +167,7 @@ namespace Biocrowds.Core
             }
             if (reflect && timePassed > 2) {
                 reverse = !reverse;
+                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                 timePassed = 0.0f;
             }
             //para ver se o agente está parado usar _velocity == Vector3.ZERO
@@ -262,6 +263,10 @@ namespace Biocrowds.Core
         public void SkipGoal()
         {
             goalIndex++;
+        }
+
+        public void FirstGoal() {
+            goalIndex = 0;
         }
 
         public void WaitStep(float _timeStep)

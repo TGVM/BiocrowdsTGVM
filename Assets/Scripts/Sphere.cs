@@ -81,17 +81,48 @@ public class Sphere : MonoBehaviour
         moshpit = SceneController.Moshpit;
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
-            Agents = World.Agents;
-            FindAgents();
-            OpenMoshpit();
-            addMoreMarkers();
-            Invoke("selectAgents", 10);
-            StartCoroutine(auxMiddle());
-            
+            if (moshpit){
+                Agents = World.Agents;
+                FindAgents();
+                OpenMoshpit();
+                addMoreMarkers();
+                Invoke("selectAgents", 10);
+                StartCoroutine(auxMiddle());
+            }
+            else
+            {
+                Debug.Log("Finish moshpit.");
+                //finish moshpit
+                EndMoshpit();
+            }
+
         }
 
     }
 
+    public void EndMoshpit() {
+        //remover novas auxins do localCells
+        for (int i = 0; i < localCells.Count; i++)
+        {
+            for (int j = 0; j < localCells.Count; j++)
+            {
+                Destroy(localCells[i].Auxins[j]);
+            }
+        }
+        localCells.Clear(); 
+        for (int i = 0; i< Agents.Count; i++)
+        {
+            Agents[i].FirstGoal();
+            Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+            Agents[i].agentRadius *= 4;
+            if (Agents[i].reflect) Agents[i].reflect = false;
+            if (Agents[i].reverse) Agents[i].reverse = false;
+            //Agents[i].FindNearAuxins();
+        }
+
+        Agents.Clear();
+        
+    }
     
 
     public IEnumerator auxMiddle()
