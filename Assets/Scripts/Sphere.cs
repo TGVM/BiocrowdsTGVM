@@ -87,12 +87,11 @@ public class Sphere : MonoBehaviour
                 FindAgents();
                 OpenMoshpit();
                 addMoreMarkers();
-                Invoke("selectAgents", 5);
+                Invoke("selectAgents", 3);
                 StartCoroutine(auxMiddle());
             }
             else
             {
-                Debug.Log("Finish moshpit.");
                 //finish moshpit
                 EndMoshpit();
             }
