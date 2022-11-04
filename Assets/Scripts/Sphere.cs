@@ -66,6 +66,7 @@ public class Sphere : MonoBehaviour
     {
         Cells = _world.Cells;
         FindLocalCells();
+
     }
 
     // Update is called once per frame
@@ -86,7 +87,7 @@ public class Sphere : MonoBehaviour
                 FindAgents();
                 OpenMoshpit();
                 addMoreMarkers();
-                Invoke("selectAgents", 10);
+                Invoke("selectAgents", 5);
                 StartCoroutine(auxMiddle());
             }
             else
@@ -102,14 +103,18 @@ public class Sphere : MonoBehaviour
 
     public void EndMoshpit() {
         //remover novas auxins do localCells
-        for (int i = 0; i < localCells.Count; i++)
+        foreach(Cell cell in localCells ) 
         {
-            for (int j = 0; j < localCells.Count; j++)
+            for (int j = 0; j < cell.Auxins.Count; j++)
             {
-                Destroy(localCells[i].Auxins[j]);
+                //Auxin obj = cell.Auxins[j];
+                cell.Auxins.RemoveAt(j);
+                //obj.enabled = false;
+                //Destroy(obj);
             }
+            //cell.Auxins.Clear();
         }
-        localCells.Clear(); 
+        //localCells.Clear(); 
         for (int i = 0; i< Agents.Count; i++)
         {
             Agents[i].FirstGoal();
