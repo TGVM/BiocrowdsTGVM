@@ -117,7 +117,7 @@ public class Sphere : MonoBehaviour
         for (int i = 0; i< Agents.Count; i++)
         {
             Agents[i].FirstGoal();
-            Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+            //Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
             Agents[i].agentRadius *= 4;
             if (Agents[i].reflect) Agents[i].reflect = false;
             if (Agents[i].reverse) Agents[i].reverse = false;
@@ -180,7 +180,7 @@ public class Sphere : MonoBehaviour
             Agents[i].SkipGoal();
 
             Agents[i].ChangeReverse();
-            Agents[i].SetColorToRed();
+            //Agents[i].SetColorToRed();
 
         }
     }
@@ -219,7 +219,7 @@ public class Sphere : MonoBehaviour
             if (dist < lesserDist + 2.3 + aux)
             {
                 moshAgents.Add(World.Agents[i]);
-                World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                //World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
             }
         }
 
@@ -237,7 +237,7 @@ public class Sphere : MonoBehaviour
         {
             moshAgents[i].Sphere = this;
             moshAgents[i].ChangeReverse();
-            moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+            //moshAgents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.black);
             moshAgents[i].reflect = true;
         }
     }

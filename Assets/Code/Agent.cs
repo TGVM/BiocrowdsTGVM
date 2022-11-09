@@ -167,7 +167,7 @@ namespace Biocrowds.Core
             }
             if (reflect && timePassed > 2) {
                 reverse = !reverse;
-                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+                //transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                 timePassed = 0.0f;
             }
             //para ver se o agente está parado usar _velocity == Vector3.ZERO
@@ -175,7 +175,7 @@ namespace Biocrowds.Core
             if (reflect && IsAtCurrentGoal())
             {
                 reverse = true;
-                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+                //transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
                 rt = UnityEngine.Random.Range(reflectThresholdMin, reflectThresholdMax);
                 goalDistThreshold = 0.4f;
             }
@@ -187,7 +187,7 @@ namespace Biocrowds.Core
             if (reflect && reverse && (Vector2.Distance(agentPos, goalPos) > rt))
             {
                 reverse = false;
-                transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+                //transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.green);
             }
 
         }
@@ -594,10 +594,10 @@ namespace Biocrowds.Core
         }
 
         
-        public void SetColorToRed()
-        {
-            this.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-        }
+        //public void SetColorToRed()
+        //{
+        //    this.transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        //}
 
         public void ChangeReverse() {
             this.reverse = !reverse;
