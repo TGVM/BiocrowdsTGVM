@@ -6594,16 +6594,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996276640}
-  m_LocalRotation: {x: -0, y: -0.6940488, z: -0, w: 0.719928}
-  m_LocalPosition: {x: 0, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.18990728, y: -0.77971554, z: 0.13121895, w: 0.58203125}
+  m_LocalPosition: {x: 0, y: 0, z: 0.89}
+  m_LocalScale: {x: 0.07386872, y: 0.28332, z: 1}
   m_Children: []
   m_Father: {fileID: 824451499}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -87.903, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.194, y: -108.562, z: -9.118}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607.2, y: -322.5}
+  m_AnchoredPosition: {x: -530.17, y: -295.27}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &996276642
@@ -10433,7 +10433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1672430820
 Light:
   m_ObjectHideFlags: 0
@@ -10480,12 +10480,12 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 265
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

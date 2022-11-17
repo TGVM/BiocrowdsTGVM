@@ -24,7 +24,7 @@ public class AgentsUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(World.Agents.Count.ToString());
+        
         myText.text = World.Agents.Count.ToString();
     }
 }
