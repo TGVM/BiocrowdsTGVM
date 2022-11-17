@@ -350,24 +350,26 @@ namespace Biocrowds.Core
             if (!_isReady)
                 return;
 
-            foreach (SpawnArea _area in spawnAreas)
-            {
-                _area.UpdateSpawnCounter(SIMULATION_TIME_STEP);
-                if (_area.CycleReady)
+            if(_agents.Count < MAX_AGENTS) { 
+                foreach (SpawnArea _area in spawnAreas)
                 {
-                    for (int i = 0; i < _area.quantitySpawnedEachCycle; i++)
+                    _area.UpdateSpawnCounter(SIMULATION_TIME_STEP);
+                    if (_area.CycleReady)
                     {
-                        if (MAX_AGENTS == 0 || _agents.Count < MAX_AGENTS)
-                            SpawnNewAgentInArea(_area, false);
+                        for (int i = 0; i < _area.quantitySpawnedEachCycle; i++)
+                        {
+                            if (MAX_AGENTS == 0 || _agents.Count < MAX_AGENTS)
+                                SpawnNewAgentInArea(_area, false);
+                        }
                     }
+                    _area.ResetCycleReady();
                 }
-                _area.ResetCycleReady();
             }
 
             // Update de Navmesh for each agent 
             for (int i = 0; i < _agents.Count; i++)
             {
-                Agent a = _agents[i];
+                //Agent a = _agents[i];
                 _agents[i].UpdateVisualAgent();
                 
             }

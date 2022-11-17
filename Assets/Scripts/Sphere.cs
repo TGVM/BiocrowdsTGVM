@@ -55,6 +55,8 @@ public class Sphere : MonoBehaviour
 
     public float lesserDist = Mathf.Infinity;
 
+    public float Radius = 5;
+
 
     private void Start()
     {
@@ -66,6 +68,9 @@ public class Sphere : MonoBehaviour
     {
         Cells = _world.Cells;
         FindLocalCells();
+        this.transform.localScale = Vector3.zero;
+        this.transform.localScale += new Vector3(Radius, 1, Radius);
+
 
     }
 
@@ -156,7 +161,8 @@ public class Sphere : MonoBehaviour
         for (int i = 0; i < Agents.Count; i++)
         {
             float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
-            if (dist <= 5 + aux)
+            
+            if (dist <= this.transform.localScale.x + aux)
             {
                 myAgents.Add(Agents[i]);
                 agentcount++;
