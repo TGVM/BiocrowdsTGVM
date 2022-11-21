@@ -2128,6 +2128,7 @@ MonoBehaviour:
     type: 3}
   lesserDist: Infinity
   Radius: 4
+  TimeToStart: 3
 --- !u!135 &179659273
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4297,8 +4298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 1563359083}
-  _showCells: 1
-  _showAuxins: 1
+  _showCells: 0
+  _showAuxins: 0
   _showAuxinVector: 0
   _showSpawnAreas: 0
   _showNavMeshCorners: 0
@@ -8736,6 +8737,7 @@ MonoBehaviour:
     type: 3}
   lesserDist: Infinity
   Radius: 5
+  TimeToStart: 10
 --- !u!4 &1407919617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3211918698737073731, guid: bb2431132316b8041a8a6879b436a83a,

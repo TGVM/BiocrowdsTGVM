@@ -56,6 +56,7 @@ public class Sphere : MonoBehaviour
     public float lesserDist = Mathf.Infinity;
 
     public float Radius = 5;
+    public float TimeToStart = 10;
 
 
     private void Start()
@@ -92,7 +93,7 @@ public class Sphere : MonoBehaviour
                 FindAgents();
                 OpenMoshpit();
                 addMoreMarkers();
-                Invoke("selectAgents", 3);
+                Invoke("selectAgents", 1);
                 StartCoroutine(auxMiddle());
             }
             else
@@ -136,7 +137,7 @@ public class Sphere : MonoBehaviour
 
     public IEnumerator auxMiddle()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(TimeToStart);
         moshAreaActive = true;
         alreadyUsed = new List<int>();
         for (int i = 0; i < _world.numberAgMosh; i++)
