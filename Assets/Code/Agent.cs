@@ -246,21 +246,21 @@ namespace Biocrowds.Core
             {
                 _visualAgent.Step();
                 
-                if(_velocity.magnitude < 0.1 /*_maxSpeed / 2*/) {
+                //if(_velocity.magnitude < 0.1 /*_maxSpeed / 2*/) {
                     if (!reflect) {
-                        //_visualAgent.transform.LookAt(Stage.transform.position);
+                        _visualAgent.transform.LookAt(Stage.transform.position);
 
-                        var targetRotation = Quaternion.LookRotation(Stage.transform.position);
+                        //var targetRotation = Quaternion.LookRotation(Stage.transform.position);
 
                         //// Smoothly rotate towards the target point.
-                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speedR * Time.deltaTime);
+                        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speedR * Time.deltaTime);
 
                         //Vector3 targetDir = Stage.transform.position;
                         ////targetDir.y = 0.0f;
                         //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 5 * speedR);
 
                     }
-                }
+                //}
             }
         }
 
