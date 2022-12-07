@@ -102,6 +102,8 @@ namespace Biocrowds.Core
         //auxins distance vector from agent
         public List<Vector3> _distAuxin;
 
+        public GameObject Stage;
+
         /*-----------Paravisis' model-----------*/
         private bool _isDenW = false; //  avoid recalculation
         private float _denW;    //  avoid recalculation
@@ -111,6 +113,7 @@ namespace Biocrowds.Core
 
         public int auxinCount;
         private float timePassed = 0.0f;
+        private int speedR = 1;
 
 
         void Start()
@@ -239,7 +242,26 @@ namespace Biocrowds.Core
 
         public void UpdateVisualAgent()
         {
-            if (_visualAgent != null) _visualAgent.Step();
+            if (_visualAgent != null)
+            {
+                _visualAgent.Step();
+                
+                if(_velocity.magnitude < 0.1 /*_maxSpeed / 2*/) {
+                    if (!reflect) {
+                        //_visualAgent.transform.LookAt(Stage.transform.position);
+
+                        var targetRotation = Quaternion.LookRotation(Stage.transform.position);
+
+                        //// Smoothly rotate towards the target point.
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speedR * Time.deltaTime);
+
+                        //Vector3 targetDir = Stage.transform.position;
+                        ////targetDir.y = 0.0f;
+                        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 5 * speedR);
+
+                    }
+                }
+            }
         }
 
         //clear agent´s informations

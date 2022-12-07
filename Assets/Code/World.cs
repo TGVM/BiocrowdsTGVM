@@ -34,6 +34,9 @@ namespace Biocrowds.Core
         [SerializeField] private float REFLECT_THRESHOLD_MAX = 1.5f;
         //[SerializeField] private int NUMBER_OF_MOSH_AGENTS = 7;
 
+
+        public GameObject Stage;
+
         public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
         public static float SPHERE_DISTANCE_PUB = 1.0f;
@@ -496,7 +499,7 @@ namespace Biocrowds.Core
             newAgent.goalDistThreshold = GOAL_DISTANCE_THRESHOLD;
             newAgent.reflectThresholdMin = REFLECT_THRESHOLD_MIN;
             newAgent.reflectThresholdMax = REFLECT_THRESHOLD_MAX;
-
+            newAgent.Stage = Stage;
 
             if (_isInitialSpawn)
             {

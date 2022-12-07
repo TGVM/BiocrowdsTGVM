@@ -22,7 +22,6 @@ public class SpawnArea : MonoBehaviour
     private float cycleCounter = 0.0f;
     private bool cycleReady = false;
 
-
     public bool CycleReady { get => cycleReady;  }
 
     private void Awake()

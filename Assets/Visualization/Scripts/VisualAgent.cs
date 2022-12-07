@@ -84,6 +84,10 @@ public class VisualAgent : MonoBehaviour
         dirView = dirMem.ToList();
         updated = false;
 
+        //get reference of goalObject
+        
+        //transform.LookAt(p_agent.goalsList[0].transform.position); 
+
     }
 
     public void Initialize(Vector3 pos, Agent p_agent)
