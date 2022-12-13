@@ -2130,11 +2130,11 @@ MonoBehaviour:
   lesserDist: Infinity
   Radius: 4
   TimeToStart: 2
-  maxSpeed: 0.002
-  xMax: 0.07
-  zMax: 0.07
-  xMin: -0.07
-  zMin: -0.07
+  maxSpeed: 0.01
+  xMax: 0.08
+  zMax: 0.08
+  xMin: -0.08
+  zMin: -0.08
 --- !u!135 &179659273
 SphereCollider:
   m_ObjectHideFlags: 0

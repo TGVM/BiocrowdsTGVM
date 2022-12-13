@@ -68,7 +68,6 @@ public class Sphere : MonoBehaviour
     private float x;
     private float z;
     private float time;
-    private float ang;
 
 
 
@@ -79,8 +78,7 @@ public class Sphere : MonoBehaviour
 
         x = Random.Range(-maxSpeed, maxSpeed);
         z = Random.Range(-maxSpeed, maxSpeed);
-        ang = Mathf.Atan2(x, z) * (180/3.141592f) + 90;
-        transform.localRotation = Quaternion.Euler(0, ang, 0);
+        
     }
 
 
@@ -324,29 +322,21 @@ public class Sphere : MonoBehaviour
         if (goal.transform.localPosition.x > xMax)
         {
             x = Random.Range(-maxSpeed, 0.0f);
-            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
-            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
             time = 0.0f;
         }
         if (goal.transform.localPosition.x < xMin)
         {
             x = Random.Range(0.0f, maxSpeed);
-            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
-            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
             time = 0.0f;
         }
         if (goal.transform.localPosition.z > zMax)
         {
             z = Random.Range(-maxSpeed, 0.0f);
-            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
-            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
             time = 0.0f;
         }
         if (goal.transform.localPosition.z < zMin)
         {
             z = Random.Range(0.0f, maxSpeed);
-            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
-            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
             time = 0.0f;
         }
 
@@ -354,8 +344,6 @@ public class Sphere : MonoBehaviour
         {
             x = Random.Range(-maxSpeed, maxSpeed);
             z = Random.Range(-maxSpeed, maxSpeed);
-            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
-            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
             time = 0.0f;
         }
 

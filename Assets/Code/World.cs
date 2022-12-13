@@ -36,6 +36,7 @@ namespace Biocrowds.Core
 
 
         public GameObject Stage;
+        private AudioSource music;
 
         public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
@@ -138,7 +139,9 @@ namespace Biocrowds.Core
 
                 SPHERE_DISTANCE_PUB = SPHERE_DISTANCE;
                 SPHERE_WEIGTH_PUB = SPHERE_WEIGTH;
-                
+
+                music = Stage.GetComponent<AudioSource>();
+
             }
             //numberAgMosh = NUMBER_OF_MOSH_AGENTS;
         }
@@ -339,6 +342,14 @@ namespace Biocrowds.Core
             {
                 for (int i = 0; i < _area.initialNumberOfAgents; i ++)
                 {
+
+                    if (_agents.Count == MAX_AGENTS)
+                    {
+                        
+                        music.Play();
+                        //Debug.Log(music.pitch);
+                    }
+
                     if (MAX_AGENTS == 0 || _agents.Count < MAX_AGENTS)
                         SpawnNewAgentInArea(_area, true);
                     yield return null;
