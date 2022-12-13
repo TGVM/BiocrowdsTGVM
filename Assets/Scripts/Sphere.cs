@@ -58,10 +58,29 @@ public class Sphere : MonoBehaviour
     public float Radius = 5;
     public float TimeToStart = 10;
 
+    //random movement
+    public float maxSpeed;
+    public float xMax;
+    public float zMax;
+    public float xMin;
+    public float zMin;
+
+    private float x;
+    private float z;
+    private float time;
+    private float ang;
+
+
+
 
     private void Start()
     {
         World = FindObjectOfType<World>();
+
+        x = Random.Range(-maxSpeed, maxSpeed);
+        z = Random.Range(-maxSpeed, maxSpeed);
+        ang = Mathf.Atan2(x, z) * (180/3.141592f) + 90;
+        transform.localRotation = Quaternion.Euler(0, ang, 0);
     }
 
 
@@ -84,6 +103,8 @@ public class Sphere : MonoBehaviour
             ltemp = loadSph;
             LoadSphere();
         }
+
+        goalRandomMovement();
 
         moshpit = SceneController.Moshpit;
         if (moshpit != mpTemp) {
@@ -293,6 +314,54 @@ public class Sphere : MonoBehaviour
         }
 
     }
+
+    void goalRandomMovement()
+    {
+        GameObject goal = moshpitGoalList[0];
+
+        time += Time.deltaTime;
+
+        if (goal.transform.localPosition.x > xMax)
+        {
+            x = Random.Range(-maxSpeed, 0.0f);
+            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
+            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
+            time = 0.0f;
+        }
+        if (goal.transform.localPosition.x < xMin)
+        {
+            x = Random.Range(0.0f, maxSpeed);
+            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
+            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
+            time = 0.0f;
+        }
+        if (goal.transform.localPosition.z > zMax)
+        {
+            z = Random.Range(-maxSpeed, 0.0f);
+            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
+            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
+            time = 0.0f;
+        }
+        if (goal.transform.localPosition.z < zMin)
+        {
+            z = Random.Range(0.0f, maxSpeed);
+            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
+            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
+            time = 0.0f;
+        }
+
+        if (time > 1.0f)
+        {
+            x = Random.Range(-maxSpeed, maxSpeed);
+            z = Random.Range(-maxSpeed, maxSpeed);
+            ang = Mathf.Atan2(x, z) * (180 / 3.141592f) + 90;
+            goal.transform.localRotation = Quaternion.Euler(0, ang, 0);
+            time = 0.0f;
+        }
+
+        goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + x, goal.transform.localPosition.y, goal.transform.localPosition.z + z);
+    }
+
 
     public IEnumerator timer(float seconds)
     {
