@@ -343,7 +343,7 @@ namespace Biocrowds.Core
                 for (int i = 0; i < _area.initialNumberOfAgents; i ++)
                 {
 
-                    if (_agents.Count == MAX_AGENTS)
+                    if (_agents.Count == MAX_AGENTS - 1)
                     {
                         
                         music.Play();
