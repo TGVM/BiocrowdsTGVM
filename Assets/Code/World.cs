@@ -35,6 +35,9 @@ namespace Biocrowds.Core
         //[SerializeField] private int NUMBER_OF_MOSH_AGENTS = 7;
 
 
+        private bool musicPlay = false;
+        private bool musicTemp = false;
+
         public GameObject Stage;
         private AudioSource music;
 
@@ -140,14 +143,17 @@ namespace Biocrowds.Core
                 SPHERE_DISTANCE_PUB = SPHERE_DISTANCE;
                 SPHERE_WEIGTH_PUB = SPHERE_WEIGTH;
 
-                music = Stage.GetComponent<AudioSource>();
+                
 
             }
             //numberAgMosh = NUMBER_OF_MOSH_AGENTS;
         }
 
+
         public void LoadWorld()
         {
+            music = Stage.GetComponent<AudioSource>();
+
             var markerSpawnerMethods = transform.GetComponentsInChildren<MarkerSpawner>();
             _markerSpawner = markerSpawnerMethods.First(p => p.spawnMethod == markerSpawnMethod);
 
@@ -342,16 +348,11 @@ namespace Biocrowds.Core
             {
                 for (int i = 0; i < _area.initialNumberOfAgents; i ++)
                 {
-
-                    if (_agents.Count == MAX_AGENTS - 1)
-                    {
-                        
-                        music.Play();
-                        //Debug.Log(music.pitch);
-                    }
-
                     if (MAX_AGENTS == 0 || _agents.Count < MAX_AGENTS)
                         SpawnNewAgentInArea(_area, true);
+
+                    
+                    
                     yield return null;
                 }
             }
@@ -463,7 +464,19 @@ namespace Biocrowds.Core
             for (int i = 0; i < _agents.Count; i++)
                 _agents[i].NavmeshStep(SIMULATION_TIME_STEP);
 
-            
+
+            if (_agents.Count == MAX_AGENTS)
+            {
+                musicPlay = true;
+                if (musicPlay != musicTemp)
+                {
+                    musicTemp = musicPlay;
+                    music.Play();
+                }
+
+                //Debug.Log(music.pitch);
+            }
+
         }
 
         private Cell GetClosestCellToPoint (Vector3 point)
