@@ -443,7 +443,7 @@ public class Sphere : MonoBehaviour
 
     //        float forceRate = (1f / distance);   //adjust value
 
-    //        body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Force);     //ver se impulse é o melhor modo
+    //        body.AddForce(direction * (forceRate / body.mass) * -1, ForceMode.Force);     //ver se impulse ï¿½ o melhor modo
 
     //        timer(0.5f);
     //        stopMoving(body);
