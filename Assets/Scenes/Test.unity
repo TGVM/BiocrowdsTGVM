@@ -2137,8 +2137,8 @@ MonoBehaviour:
   auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
     type: 3}
   lesserDist: Infinity
-  Radius: 4
-  TimeToStart: 2
+  Radius: 5
+  TimeToStart: 5
   maxSpeed: 0.01
   xMax: 0.08
   zMax: 0.08
@@ -12874,7 +12874,7 @@ PrefabInstance:
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
       propertyPath: MAX_AGENTS
-      value: 250
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}

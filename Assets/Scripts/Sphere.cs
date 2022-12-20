@@ -177,10 +177,12 @@ public class Sphere : MonoBehaviour
         int agentcount = 0;
         float aux = _world.numberAgMosh / 10;
 
+        Vector3 thisTransfPos = this.transform.position;
+
         myAgents = new List<Agent>();
         for (int i = 0; i < Agents.Count; i++)
         {
-            float dist = Vector3.Distance(Agents[i].transform.position, this.transform.position);
+            float dist = Vector3.Distance(Agents[i].transform.position, thisTransfPos);
             
             if (dist <= this.transform.localScale.x + aux)
             {
