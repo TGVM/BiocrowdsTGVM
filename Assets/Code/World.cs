@@ -35,6 +35,8 @@ namespace Biocrowds.Core
         //[SerializeField] private int NUMBER_OF_MOSH_AGENTS = 7;
 
 
+        public bool audioReady = false;
+
         private bool musicPlay = false;
         private bool musicTemp = false;
 
@@ -476,6 +478,33 @@ namespace Biocrowds.Core
 
                 //Debug.Log(music.pitch);
             }
+
+            //if (music.time >= 128f && music.time < 129f)
+            //{
+            float[] curSpectrum = new float[1024];
+            music.GetSpectrumData(curSpectrum, 0, FFTWindow.BlackmanHarris);
+
+            float targetFrequency = 234f;
+            float hertzPerBin = (float)AudioSettings.outputSampleRate / 2f / 1024;
+            int targetIndex = (int)(targetFrequency / hertzPerBin);
+
+            //string outString = "";
+            //for (int i = 0; i <= targetIndex + 5; i++)
+            //{
+            //    outString += string.Format("| Bin {0} : {1}Hz : {2} |   ", i, i * hertzPerBin, curSpectrum[i]);
+
+            if (curSpectrum[3] > 0.0085f){
+                audioReady = true;
+            }
+                
+            //}
+
+            
+
+
+            //Debug.Log(outString);
+
+            //}
 
         }
 

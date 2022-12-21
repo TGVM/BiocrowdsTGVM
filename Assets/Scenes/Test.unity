@@ -2138,12 +2138,12 @@ MonoBehaviour:
     type: 3}
   lesserDist: Infinity
   Radius: 5
-  TimeToStart: 5
-  maxSpeed: 0.01
+  TimeToStart: 4
+  maxSpeed: 0.02
   xMax: 0.08
-  zMax: 0.08
+  zMax: 0.3
   xMin: -0.08
-  zMin: -0.08
+  zMin: -0.3
 --- !u!135 &179659273
 SphereCollider:
   m_ObjectHideFlags: 0

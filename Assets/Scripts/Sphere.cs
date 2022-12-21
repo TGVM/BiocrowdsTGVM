@@ -104,7 +104,8 @@ public class Sphere : MonoBehaviour
 
         goalRandomMovement();
 
-        moshpit = SceneController.Moshpit;
+        //moshpit = SceneController.Moshpit;
+        moshpit = World.audioReady;
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
             if (moshpit){
