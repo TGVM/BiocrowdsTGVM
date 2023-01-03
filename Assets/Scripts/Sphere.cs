@@ -115,7 +115,7 @@ public class Sphere : MonoBehaviour
                 addMoreMarkers();
                 Invoke("selectAgents", 1);
                 StartCoroutine(auxMiddle());
-            }
+            }       //end mosh after some seconds
             else
             {
                 //finish moshpit
