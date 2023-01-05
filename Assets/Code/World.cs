@@ -476,7 +476,6 @@ namespace Biocrowds.Core
                     music.Play();
                 }
 
-                //Debug.Log(music.pitch);
             }
 
             //if (music.time >= 128f && music.time < 129f)
@@ -495,11 +494,15 @@ namespace Biocrowds.Core
 
             if (curSpectrum[3] > 0.0085f){
                 audioReady = true;
+                //inicia contar tempo
             }
                 
             //}
 
-            
+            if(musicTemp && !music.isPlaying) {
+                audioReady = false;
+            } 
+
 
 
             //Debug.Log(outString);
