@@ -2137,8 +2137,8 @@ MonoBehaviour:
   auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
     type: 3}
   lesserDist: Infinity
-  Radius: 5
-  TimeToStart: 4
+  Radius: 4
+  TimeToStart: 3
   maxSpeed: 0.01
   xMax: 0.08
   zMax: 0.3
