@@ -39,6 +39,9 @@ namespace Biocrowds.Core
 
         private bool musicPlay = false;
         private bool musicTemp = false;
+        private float initialTimer = 0f;
+        private bool useTimer = false;
+
 
         private float maxVal = 0;
         private string maxOut = "";
@@ -491,23 +494,50 @@ namespace Biocrowds.Core
             float hertzPerBin = (float)AudioSettings.outputSampleRate / 2f / 1024;
             int targetIndex = (int)(targetFrequency / hertzPerBin);
 
-            string outString = "";
-            for (int i = 0; i <= targetIndex + 5; i++)
+            //string outString = "";
+            //for (int i = 0; i <= targetIndex + 5; i++)
+            //{
+            //    outString += string.Format("| Bin {0} : {1}Hz : {2} |   ", i, i * hertzPerBin, curSpectrum[i]);
+            //    if (curSpectrum[i] > maxVal)
+            //    {
+            //        maxVal = curSpectrum[i];
+            //        maxOut = outString;
+            //    }
+                
+            //    //if (music.isPlaying) Debug.Log(outString);
+            //}
+            //if(!music.isPlaying && musicPlay)
+            //{
+            //    auxMusic();
+            //}
+
+            if (!audioReady && curSpectrum[3] > 0.0085f && initialTimer >= 100f)
             {
-                outString += string.Format("| Bin {0} : {1}Hz : {2} |   ", i, i * hertzPerBin, curSpectrum[i]);
-                if (curSpectrum[i] > maxVal)
-                {
-                    maxVal = curSpectrum[i];
-                    maxOut = outString;
-                }
-                if (curSpectrum[3] > 0.0085f){
-                    audioReady = true;
-                }
-                if (music.isPlaying) Debug.Log(outString);
+                audioReady = true;
+                //inicia contar tempo
+                useTimer = true;
+                initialTimer = 0;
             }
-            if(!music.isPlaying && musicPlay)
+
+            initialTimer += Time.deltaTime;
+
+            if (useTimer)
             {
-                auxMusic();
+                if(initialTimer >= 60f)
+                {
+                    audioReady = false;
+                    useTimer = false;
+                    
+                }
+                //Debug.Log("AudiReady" + audioReady + "deltatime: " + Time.deltaTime + "initialtimer: " + initialTimer);
+            }
+
+            //}
+
+            if (musicTemp && !music.isPlaying)
+            {
+                audioReady = false;
+                useTimer = false;
             }
 
         }
