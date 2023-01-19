@@ -2966,7 +2966,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1716b1cd36ee3ff44842b38da820cbd0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b22c0318e1e89eb4ba27eb4f83064de3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.05
   m_Pitch: 1
@@ -6821,31 +6821,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996276640}
   m_CullTransparentMesh: 1
---- !u!1 &996332659 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1089654314992276, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1893788803}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &996332660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996332659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f24c62d3890aef4293c22ffe9930372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  song: {fileID: 0}
-  InstantSpec: 0
-  AverageSpec: 0
-  VarianceSum: 0
-  Variance: 0
-  Constant: 0
-  Stage: {fileID: 298484669}
 --- !u!1 &1008346197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1000011549557636, guid: c1d6a8b56708a2a4b833bbbc88504078,
@@ -9882,7 +9857,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1893788803}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996332659}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54d72dbca884a664485700347e527a71, type: 3}

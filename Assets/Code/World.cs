@@ -37,7 +37,7 @@ namespace Biocrowds.Core
 
         public bool audioReady = false;
 
-        private bool musicPlay = false;
+        public bool musicPlay = false;
         private bool musicTemp = false;
         private float initialTimer = 0f;
         private bool useTimer = false;
@@ -48,12 +48,16 @@ namespace Biocrowds.Core
 
         public GameObject Stage;
         private AudioSource music;
+        public int bpm;
+
 
         public static float simTimeStep = 0.02f;
         public static float SPHERE_WEIGTH_PUB = 1.0f;
         public static float SPHERE_DISTANCE_PUB = 1.0f;
         public static bool CellsReady = false;
         public int numberAgMosh;
+
+
 
         [Header("Terrain Setting")]
         public MeshFilter planeMeshFilter;
@@ -161,6 +165,15 @@ namespace Biocrowds.Core
         public void LoadWorld()
         {
             music = Stage.GetComponent<AudioSource>();
+
+            AudioClip target = music.clip;
+
+            bpm = UniBpmAnalyzer.AnalyzeBpm(target);
+            if (bpm < 0)
+            {
+                Debug.LogError("AudioClip is null.");
+                return;
+            }
 
             var markerSpawnerMethods = transform.GetComponentsInChildren<MarkerSpawner>();
             _markerSpawner = markerSpawnerMethods.First(p => p.spawnMethod == markerSpawnMethod);

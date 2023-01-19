@@ -131,6 +131,13 @@ namespace Biocrowds.Core
             sphDist = World.SPHERE_DISTANCE_PUB;
             sphWeight = World.SPHERE_WEIGTH_PUB;
 
+
+            if (World.musicPlay)
+            {
+                _maxSpeed = (World.bpm / 100f)*2;
+
+            }
+
         }
         public void AddGoal(GameObject newGoal)
         {
