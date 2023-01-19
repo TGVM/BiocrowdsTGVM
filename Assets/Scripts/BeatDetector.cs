@@ -27,6 +27,15 @@ public class BeatDetector : MonoBehaviour
 
         song = Stage.GetComponent<AudioSource>();
         Beated = false;
+        AudioClip target = song.clip;
+
+        int bpm = UniBpmAnalyzer.AnalyzeBpm(target);
+        if (bpm < 0)
+        {
+            Debug.LogError("AudioClip is null.");
+            return;
+        }
+
     }
 
     // Update is called once per frame
@@ -47,9 +56,9 @@ public class BeatDetector : MonoBehaviour
         AverageSpec = (SamplesSize / historyBuffer.Length) *sumLocalEnergy2(historyBuffer);  //Rafa
 
         //calculate variance
-        //VarianceSum = 0;
-        //for (int i = 0; i < 43; i++)  //Normal
-        //VarianceSum += (historyBuffer[i]-AverageSpec)*(historyBuffer[i]-AverageSpec);
+        VarianceSum = 0;
+        for (int i = 0; i < 43; i++)  //Normal
+            VarianceSum += (historyBuffer[i] - AverageSpec) * (historyBuffer[i] - AverageSpec);
 
         //Variance = VarianceSum/historyBuffer.Length;  //Normal
         Variance = VarianceAdder(historyBuffer) / historyBuffer.Length;  //Rafa
@@ -67,22 +76,22 @@ public class BeatDetector : MonoBehaviour
             historyBuffer[i] = shiftingHistoryBuffer[i]; //then we return the values to the original array
         }
 
-        if (InstantSpec > (Constant * AverageSpec))
-        { // now we check if we have a beat
-            if (!Beated)
-            {
-                Debug.Log("Beat");
-                Beated = true;
-            }
-        }
-        else
-        {
-            if (Beated)
-            {
-                Beated = false;
-            }
-            Debug.Log("No Beat");
-        }
+        //if (InstantSpec > (Constant * AverageSpec))
+        //{ // now we check if we have a beat
+        //    if (!Beated)
+        //    {
+        //        Debug.Log("Beat");
+        //        Beated = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (Beated)
+        //    {
+        //        Beated = false;
+        //    }
+        //    Debug.Log("No Beat");
+        //}
 
         //Debug.Log ("Avg local: " + E);
         //Debug.Log ("Instant: " + e);
