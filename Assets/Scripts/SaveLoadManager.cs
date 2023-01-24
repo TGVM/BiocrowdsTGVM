@@ -4,8 +4,9 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using Biocrowds.Core;
 
-public static class SaveLoadManager
+public class SaveLoadManager
 {
     /*
     links:
@@ -27,5 +28,35 @@ public static class SaveLoadManager
             transofrm.position, radius, moshpitGoal, marker Radius, marker density, lesserDist, timeToStart
     
     */
+
+    /*
+     ref de World para pegar agents atuais e para carregar agents salvos
+
+    input de save:
+    cria arquivo / reset em arquivo já existente
+    salva parâmetros dos auxins: pos
+    salva parâmetros dos agents: pos, goal, auxins
+
+    input de load:
+    busca arquivo
+    cria auxins com parâmetros salvos
+    cria agentes com parâmetros salvos
+
+     
+     */
+
+    private World _world;
+    public World World
+    {
+        get { return _world; }
+        set { _world = value; }
+    }
+
+    private void Start()
+    {
+        World = FindObjectOfType<World>();
+
+       
+    }
 
 }
