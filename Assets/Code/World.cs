@@ -485,73 +485,57 @@ namespace Biocrowds.Core
             for (int i = 0; i < _agents.Count; i++)
                 _agents[i].NavmeshStep(SIMULATION_TIME_STEP);
 
-
-            if (_agents.Count == MAX_AGENTS)
-            {
-                musicPlay = true;
-                if (musicPlay != musicTemp)
-                {
-                    musicTemp = musicPlay;
-                    music.Play();
-                }
-
-            }
-
-            //if (music.time >= 128f && music.time < 129f)
+            //DESCOMENTAR ESTA PARTE PARA TOCAR MÚSICA
+            //if (_agents.Count == MAX_AGENTS)
             //{
-            float[] curSpectrum = new float[1024];
-            music.GetSpectrumData(curSpectrum, 0, FFTWindow.BlackmanHarris);
+            //    musicPlay = true;
+            //    if (musicPlay != musicTemp)
+            //    {
+            //        musicTemp = musicPlay;
+            //        music.Play();
+            //    }
+
+            //}
+
+            //DESCOMENTAR ESTA PARTE PARA A MÚSICA INICIAR COMPORTAMENTOS
+
+            //float[] curSpectrum = new float[1024];
+            //music.GetSpectrumData(curSpectrum, 0, FFTWindow.BlackmanHarris);
 
             
-            float targetFrequency = 234f;
-            float hertzPerBin = (float)AudioSettings.outputSampleRate / 2f / 1024;
-            int targetIndex = (int)(targetFrequency / hertzPerBin);
+            //float targetFrequency = 234f;
+            //float hertzPerBin = (float)AudioSettings.outputSampleRate / 2f / 1024;
+            //int targetIndex = (int)(targetFrequency / hertzPerBin);
 
-            //string outString = "";
-            //for (int i = 0; i <= targetIndex + 5; i++)
+            
+
+            //if (!audioReady && curSpectrum[3] > 0.0085f && initialTimer >= 100f)
             //{
-            //    outString += string.Format("| Bin {0} : {1}Hz : {2} |   ", i, i * hertzPerBin, curSpectrum[i]);
-            //    if (curSpectrum[i] > maxVal)
+            //    audioReady = true;
+            //    //inicia contar tempo
+            //    useTimer = true;
+            //    initialTimer = 0;
+            //}
+
+            //initialTimer += Time.deltaTime;
+
+            //if (useTimer)
+            //{
+            //    if(initialTimer >= 60f)
             //    {
-            //        maxVal = curSpectrum[i];
-            //        maxOut = outString;
+            //        audioReady = false;
+            //        useTimer = false;
+                    
             //    }
                 
-            //    //if (music.isPlaying) Debug.Log(outString);
             //}
-            //if(!music.isPlaying && musicPlay)
+
+
+            //if (musicTemp && !music.isPlaying)
             //{
-            //    auxMusic();
+            //    audioReady = false;
+            //    useTimer = false;
             //}
-
-            if (!audioReady && curSpectrum[3] > 0.0085f && initialTimer >= 100f)
-            {
-                audioReady = true;
-                //inicia contar tempo
-                useTimer = true;
-                initialTimer = 0;
-            }
-
-            initialTimer += Time.deltaTime;
-
-            if (useTimer)
-            {
-                if(initialTimer >= 60f)
-                {
-                    audioReady = false;
-                    useTimer = false;
-                    
-                }
-                //Debug.Log("AudiReady" + audioReady + "deltatime: " + Time.deltaTime + "initialtimer: " + initialTimer);
-            }
-
-            //}
-
-            if (musicTemp && !music.isPlaying)
-            {
-                audioReady = false;
-                useTimer = false;
-            }
 
         }
 
