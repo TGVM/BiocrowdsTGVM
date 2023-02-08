@@ -11,6 +11,7 @@ public class SceneController : MonoBehaviour
     private bool initialized = false;
 
     public static bool Moshpit = false;
+    public static bool Circlepit = false;
     public static bool ShowCells { get; protected set; } = true;
     public static bool ShowAuxins { get; protected set; } = true;
     public static bool ShowSpawnAreas { get; protected set; } = true;
@@ -70,6 +71,7 @@ public class SceneController : MonoBehaviour
         {
             Debug.Log("Loading World");
             Debug.Log("Press M to start the moshpit");
+            Debug.Log("Press C to start the circlepit");
             List<SpawnArea> _spawners = FindObjectsOfType<SpawnArea>().ToList();
             foreach (SpawnArea s in _spawners)
                 s.ShowMesh(ShowSpawnAreas);
@@ -78,10 +80,18 @@ public class SceneController : MonoBehaviour
             world.LoadWorld();
         }
 
-        if (Input.GetKeyDown(KeyCode.M)) {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
             //opens space on sphere area
             Debug.Log("M pressed!");
             Moshpit = !Moshpit;
+
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            //opens space on sphere area
+            Debug.Log("C pressed!");
+            Circlepit = !Circlepit;
 
         }
 

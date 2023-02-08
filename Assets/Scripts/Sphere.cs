@@ -39,7 +39,8 @@ public class Sphere : MonoBehaviour
     private bool loadSph = false;
     private bool ltemp = false;
 
-    
+    private bool circlepit = false;
+    private bool ccTemp = false;
 
     //radius for auxin collide
     public float MarkerRadius = 0.1f;
@@ -104,11 +105,36 @@ public class Sphere : MonoBehaviour
 
         goalRandomMovement();
 
-        //moshpit = SceneController.Moshpit;
-        moshpit = World.audioReady;
+        moshpit = SceneController.Moshpit;
+        //moshpit = World.audioReady;
+
+
+        circlepit = SceneController.Circlepit;
+
         if (moshpit != mpTemp) {
             mpTemp = moshpit;
             if (moshpit){
+                Agents = World.Agents;
+                FindAgents();
+                OpenMoshpit();
+                addMoreMarkers();
+                Invoke("selectAgents", 1);
+                //criar função para o circlepit
+
+
+            }       //end mosh after some seconds
+            else
+            {
+                //finish moshpit
+                EndMoshpit();
+            }
+
+        }
+        if (circlepit != ccTemp)
+        {
+            ccTemp = circlepit;
+            if (circlepit)
+            {
                 Agents = World.Agents;
                 FindAgents();
                 OpenMoshpit();
@@ -123,7 +149,6 @@ public class Sphere : MonoBehaviour
             }
 
         }
-
     }
 
     public void EndMoshpit() {
@@ -351,6 +376,16 @@ public class Sphere : MonoBehaviour
         }
 
         goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + x, goal.transform.localPosition.y, goal.transform.localPosition.z + z);
+    }
+
+    public void Circlepit()
+    {
+
+        //fazer goal se mover em círculo
+
+
+        //mandar agentes seguirem goal
+
     }
 
 
