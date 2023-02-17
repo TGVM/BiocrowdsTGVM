@@ -70,7 +70,9 @@ public class Sphere : MonoBehaviour
     private float z;
     private float time;
 
-
+    [SerializeField]
+    float moveSpeed, cpRadius;
+    float angle;
 
 
     private void Start()
@@ -103,7 +105,14 @@ public class Sphere : MonoBehaviour
             LoadSphere();
         }
 
-        goalRandomMovement();
+        if (moshpit)
+        {
+            goalRandomMovement();
+        }
+        if (circlepit)
+        {
+            Circlepit();
+        }
 
         moshpit = SceneController.Moshpit;
         //moshpit = World.audioReady;
@@ -132,9 +141,14 @@ public class Sphere : MonoBehaviour
         }
         if (circlepit != ccTemp)
         {
+            Debug.Log("Circlepit");
             ccTemp = circlepit;
             if (circlepit)
             {
+                GameObject goal = moshpitGoalList[0];
+                goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
+
+
                 Agents = World.Agents;
                 FindAgents();
                 OpenMoshpit();
@@ -380,9 +394,14 @@ public class Sphere : MonoBehaviour
 
     public void Circlepit()
     {
+        GameObject goal = moshpitGoalList[0];
 
         //fazer goal se mover em círculo
-
+        //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
+        
+        
+        angle += (moveSpeed / (cpRadius * Mathf.PI * 2.0f)) * Time.deltaTime;
+        goal.transform.localPosition = new Vector3(Mathf.Cos(angle), goal.transform.localPosition.y, Mathf.Sin(angle)) / cpRadius;
 
         //mandar agentes seguirem goal
 
