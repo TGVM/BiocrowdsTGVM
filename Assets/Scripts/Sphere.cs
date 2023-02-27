@@ -15,6 +15,8 @@ public class Sphere : MonoBehaviour
 
     [Header("Moshpit Goals")]
     public List<GameObject> moshpitGoalList;
+    public List<GameObject> circlepitGoalList;
+
 
     public List<Agent> agentsList = new List<Agent>();
     public List<int> alreadyUsed = new List<int>();
@@ -38,8 +40,12 @@ public class Sphere : MonoBehaviour
     private bool moshpit = false;
     private bool loadSph = false;
     private bool ltemp = false;
+    private bool agReady = false;
 
-    
+
+    private bool cpTemp = false;
+    private bool circlepit = false;
+
 
     //radius for auxin collide
     public float MarkerRadius = 0.1f;
@@ -102,19 +108,52 @@ public class Sphere : MonoBehaviour
             LoadSphere();
         }
 
-        goalRandomMovement();
+        if (moshpit)
+        {
+            goalRandomMovement();
+        }
+        //if (circlepit) {
+        //    goalCircleMovement();
+        //}
 
-        //moshpit = SceneController.Moshpit;
-        moshpit = World.audioReady;
+        moshpit = SceneController.Moshpit;
+        circlepit = SceneController.Circlepit;
+        //moshpit = World.audioReady;                   //TROCAR ESSAS 2 LINHAS PRA ALTERAR O TRIGGER DE MOSHPIT
         if (moshpit != mpTemp) {
+            
             mpTemp = moshpit;
             if (moshpit){
+
                 Agents = World.Agents;
                 FindAgents();
                 OpenMoshpit();
                 addMoreMarkers();
                 Invoke("selectAgents", 1);
                 StartCoroutine(auxMiddle());
+            }       //end mosh after some seconds
+            else
+            {
+                //finish moshpit
+                EndMoshpit();
+            }
+
+        }
+
+        if (circlepit != cpTemp)
+        {
+
+            cpTemp = circlepit;
+            if (circlepit)
+            {
+                Agents = World.Agents;
+                FindAgents();
+                OpenMoshpit();
+                addMoreMarkers();
+                //COMPORTAMENTO EM CÍRCULO DO GOAL
+                Invoke("selectAgents", 1);
+                //StartCoroutine(auxMiddle());
+
+                StartCoroutine(Circlepit());
             }       //end mosh after some seconds
             else
             {
@@ -251,7 +290,7 @@ public class Sphere : MonoBehaviour
                 //World.Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
             }
         }
-
+        agReady = true;
     }
 
     public void goToMiddle() {
@@ -313,8 +352,30 @@ public class Sphere : MonoBehaviour
                 other = moshAgents[i].gameObject;
             }
         }
+    }
+
+
+    public IEnumerator Circlepit() {
+        yield return new WaitForSeconds(10);
+        /*
+        fazer debug aqui
+
+        ver se biocrowds já entra em repetição de goals ou se precisa implementar
+         
+         */
+
+        for (int i = 0; i<moshAgents.Count; i++ ){
+            moshAgents[i].goalsList.RemoveAt(moshAgents[i].goalsList.Count - 1);
+            moshAgents[i].FirstGoal();
+            for (int j = 0; j < circlepitGoalList.Count; j++)
+            {
+                moshAgents[i].goalsList.Add(circlepitGoalList[j]);
+                moshAgents[i].SkipGoal();
+            }
+        }
 
     }
+
 
     void goalRandomMovement()
     {
@@ -352,6 +413,23 @@ public class Sphere : MonoBehaviour
 
         goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + x, goal.transform.localPosition.y, goal.transform.localPosition.z + z);
     }
+
+
+    //void goalCircleMovement() {
+    //    GameObject goal = moshpitGoalList[0];
+    //    float speed = 1.5f;
+
+
+    //    float timeCounter = 0f;
+    //    timeCounter += Time.deltaTime;
+    //    float x = Mathf.Cos(timeCounter);
+    //    float y = 0;
+    //    float z = Mathf.Sin(timeCounter);
+    //    goal.transform.position = new Vector3(x, y, z);
+    //}
+
+
+
 
 
     public IEnumerator timer(float seconds)

@@ -54,7 +54,7 @@ public class SaveLoadManager
 
     private void Start()
     {
-        World = FindObjectOfType<World>();
+        //World = FindObjectOfType<World>();
 
        
     }
