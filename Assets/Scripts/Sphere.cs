@@ -148,31 +148,10 @@ public class Sphere : MonoBehaviour
             ccTemp = circlepit;
             if (circlepit)
             {
-                GameObject goal = moshpitGoalList[0];
-                goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
+                //GameObject goal = moshpitGoalList[0];
+                //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
+                //PARA FAZER A VERSÃO COM 1 GOAL CIRCULANDO
 
-
-                Agents = World.Agents;
-                FindAgents();
-                OpenMoshpit();
-                addMoreMarkers();
-                Invoke("selectAgents", 1);
-                StartCoroutine(auxMiddle());
-            }       //end mosh after some seconds
-            else
-            {
-                //finish moshpit
-                EndMoshpit();
-            }
-
-        }
-
-        if (circlepit != cpTemp)
-        {
-
-            cpTemp = circlepit;
-            if (circlepit)
-            {
                 Agents = World.Agents;
                 FindAgents();
                 OpenMoshpit();
@@ -190,6 +169,7 @@ public class Sphere : MonoBehaviour
             }
 
         }
+
 
     }
 
@@ -442,33 +422,20 @@ public class Sphere : MonoBehaviour
         goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + x, goal.transform.localPosition.y, goal.transform.localPosition.z + z);
     }
 
-    public void Circlepit()
-    {
-        GameObject goal = moshpitGoalList[0];
-
-        //fazer goal se mover em círculo
-        //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
-        
-        
-        angle += (moveSpeed / (cpRadius * Mathf.PI * 2.0f)) * Time.deltaTime;
-        goal.transform.localPosition = new Vector3(Mathf.Cos(angle), goal.transform.localPosition.y, Mathf.Sin(angle)) / cpRadius;
-
-        //mandar agentes seguirem goal
-
-    }
+    
 
 
     //void goalCircleMovement() {
     //    GameObject goal = moshpitGoalList[0];
-    //    float speed = 1.5f;
+
+    //fazer goal se mover em círculo
+    //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
 
 
-    //    float timeCounter = 0f;
-    //    timeCounter += Time.deltaTime;
-    //    float x = Mathf.Cos(timeCounter);
-    //    float y = 0;
-    //    float z = Mathf.Sin(timeCounter);
-    //    goal.transform.position = new Vector3(x, y, z);
+        //angle += (moveSpeed / (cpRadius* Mathf.PI* 2.0f)) * Time.deltaTime;
+        //goal.transform.localPosition = new Vector3(Mathf.Cos(angle), goal.transform.localPosition.y, Mathf.Sin(angle)) / cpRadius;
+
+        //mandar agentes seguirem goal
     //}
 
 
