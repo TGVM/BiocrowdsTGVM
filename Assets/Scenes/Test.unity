@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074002, b: 0.3587271, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2238,6 +2238,8 @@ MonoBehaviour:
   zMax: 0.3
   xMin: -0.08
   zMin: -0.3
+  moveSpeed: 10
+  cpRadius: 1.5
 --- !u!135 &179659273
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9427,6 +9429,8 @@ MonoBehaviour:
   zMax: 0
   xMin: 0
   zMin: 0
+  moveSpeed: 0
+  cpRadius: 0
 --- !u!4 &1407919617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3211918698737073731, guid: bb2431132316b8041a8a6879b436a83a,
