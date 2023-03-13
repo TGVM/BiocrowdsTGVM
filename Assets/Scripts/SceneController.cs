@@ -95,13 +95,6 @@ public class SceneController : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            //opens space on sphere area
-            Debug.Log("C pressed!");
-            Circlepit = !Circlepit;
-
-        }
 
     }
 }

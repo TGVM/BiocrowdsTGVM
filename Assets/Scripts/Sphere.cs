@@ -364,7 +364,7 @@ public class Sphere : MonoBehaviour
 
 
     public IEnumerator Circlepit() {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(3);
         /*
         fazer debug aqui
 
