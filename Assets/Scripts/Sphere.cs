@@ -133,7 +133,7 @@ public class Sphere : MonoBehaviour
                 Invoke("selectAgents", 1);
                 //criar função para o circlepit
 
-
+                StartCoroutine(auxMiddle());
             }       //end mosh after some seconds
             else
             {
@@ -364,7 +364,7 @@ public class Sphere : MonoBehaviour
 
 
     public IEnumerator Circlepit() {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(TimeToStart);
         /*
         fazer debug aqui
 
@@ -374,12 +374,15 @@ public class Sphere : MonoBehaviour
 
         for (int i = 0; i<moshAgents.Count; i++ ){
             moshAgents[i].goalsList.RemoveAt(moshAgents[i].goalsList.Count - 1);
-            moshAgents[i].FirstGoal();
+            //moshAgents[i].FirstGoal();
             for (int j = 0; j < circlepitGoalList.Count; j++)
             {
                 moshAgents[i].goalsList.Add(circlepitGoalList[j]);
-                moshAgents[i].SkipGoal();
+                //moshAgents[i].SkipGoal();
             }
+            moshAgents[i].goalsList.RemoveAt(0);
+            moshAgents[i].FirstGoal();
+            moshAgents[i].SkipGoal();
         }
 
     }

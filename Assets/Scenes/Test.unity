@@ -2185,7 +2185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179659270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.7, y: 0, z: 10.03}
+  m_LocalPosition: {x: 5.01, y: 0, z: 10.03}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children:
   - {fileID: 2020979749}
@@ -2322,18 +2322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c3e183ec27ba64d83e010bf18edb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useDefaultDevice: 1
-  _deviceID: 
-  _channel: 0
-  _filterType: 0
-  _autoGain: 1
-  _gain: 6
-  _dynamicRange: 12
-  _smoothFall: 1
-  _fallSpeed: 0.3
-  _propertyBinders: []
-  references:
-    version: 1
 --- !u!4 &183198670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010125518806, guid: c1d6a8b56708a2a4b833bbbc88504078,
