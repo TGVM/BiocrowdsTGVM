@@ -55,7 +55,8 @@ namespace Biocrowds.Core
         [SerializeField]
         private int goalIndex = 0;
         public bool removeWhenGoalReached;
-
+        [SerializeField]
+        private float distanceToCurrentGoal = 2.0f;
         public float goalDistThreshold = 1.0f;
 
         //list with all auxins in his personal space
@@ -108,6 +109,7 @@ namespace Biocrowds.Core
         private bool _isDenW = false; //  avoid recalculation
         private float _denW;    //  avoid recalculation
         private Vector3 _rotation; //orientation vector (movement)
+        [SerializeField]
         private Vector3 _goalPosition; //goal position
         private Vector3 _dirAgentGoal; //diff between goal and agent
 
@@ -300,9 +302,9 @@ namespace Biocrowds.Core
 
         public void WaitStep(float _timeStep)
         {
-            if (goalIndex != goalsWaitList.Count - 1 && goalIndex + 1 > goalsWaitList.Count)
+            if (goalIndex != goalsWaitList.Count - 1 && goalIndex + 1 > goalsWaitList.Count) //colocar 8 0s na wait list
             {
-                //Debug.LogError("No wait defined for current goal");
+                Debug.LogError("No wait defined for current goal");
                 return;
             }
             if (isWaiting)
@@ -315,8 +317,8 @@ namespace Biocrowds.Core
                     UpdateGoalPositionAndNavmesh();
                 }
             }
-            //else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1) original conditions
-            else if (goalIndex < goalsList.Count - 1)   //modified conditions
+            //else if (IsAtCurrentGoal()) original conditions
+            else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1)   //modified conditions
             {
                 if (goalsWaitList[goalIndex] >= 0.1f)
                 {
@@ -325,6 +327,7 @@ namespace Biocrowds.Core
                 }
                 else
                 {
+                    //usar modulo
                     waitCount = 0.0f;
                     goalIndex++;
                     UpdateGoalPositionAndNavmesh();
@@ -610,7 +613,8 @@ namespace Biocrowds.Core
             Vector2 agentPos = new Vector2(transform.position.x, transform.position.z);
             Vector2 goalPos = new Vector2(goalsList[goalIndex].transform.position.x,
                 goalsList[goalIndex].transform.position.z);
-            return (Vector2.Distance(agentPos, goalPos) <= goalDistThreshold);
+            distanceToCurrentGoal = Vector2.Distance(agentPos, goalPos);
+            return (distanceToCurrentGoal <= goalDistThreshold);
         }
 
         public bool IsAtFinalGoal()
@@ -619,7 +623,8 @@ namespace Biocrowds.Core
             Vector2 agentPos = new Vector2(transform.position.x, transform.position.z);
             Vector2 goalPos = new Vector2(goalsList[goalsList.Count - 1].transform.position.x,
                 goalsList[goalsList.Count - 1].transform.position.z);
-            return (Vector2.Distance(agentPos, goalPos) <= goalDistThreshold);
+            distanceToCurrentGoal = Vector2.Distance(agentPos, goalPos);
+            return (distanceToCurrentGoal <= goalDistThreshold);
         }
 
         
