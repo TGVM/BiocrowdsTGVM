@@ -382,7 +382,7 @@ public class Sphere : MonoBehaviour
             }
             moshAgents[i].goalsList.RemoveAt(0);
             moshAgents[i].FirstGoal();
-            moshAgents[i].SkipGoal();
+            moshAgents[i].reverse = false;
         }
 
     }
