@@ -372,21 +372,40 @@ public class Sphere : MonoBehaviour
          
          */
 
-        for (int i = 0; i<moshAgents.Count; i++ ){
-            moshAgents[i].goalsList.RemoveAt(moshAgents[i].goalsList.Count - 1);
-            //moshAgents[i].FirstGoal();
-            for (int j = 0; j < circlepitGoalList.Count; j++)
-            {
-                moshAgents[i].goalsList.Add(circlepitGoalList[j]);
-                //moshAgents[i].SkipGoal();
-            }
-            moshAgents[i].goalsList.RemoveAt(0);
-            moshAgents[i].FirstGoal();
-            moshAgents[i].reverse = false;
+        moshAreaActive = true;
+        alreadyUsed = new List<int>();
+        for (int i = 0; i < _world.numberAgMosh; i++)
+        {
+            auxCirclePit();
+            //moshArea();
+            yield return new WaitForSeconds(Random.Range(0f, 1f));
         }
+
+
 
     }
 
+    void auxCirclePit()
+    {
+        int i = Random.Range(0, moshAgents.Count);
+        while (alreadyUsed.Contains(i) && alreadyUsed.Count < moshAgents.Count)
+        {
+            i = Random.Range(0, moshAgents.Count);
+        }
+        alreadyUsed.Add(i);
+
+        moshAgents[i].goalsList.RemoveAt(moshAgents[i].goalsList.Count - 1);
+        //moshAgents[i].FirstGoal();
+        for (int j = 0; j < circlepitGoalList.Count; j++)
+        {
+            moshAgents[i].goalsList.Add(circlepitGoalList[j]);
+            //moshAgents[i].SkipGoal();
+        }
+        moshAgents[i].goalsList.RemoveAt(0);
+        moshAgents[i].FirstGoal();
+        moshAgents[i].reverse = false;
+        
+    }
 
     void goalRandomMovement()
     {
