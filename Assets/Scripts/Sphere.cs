@@ -399,11 +399,15 @@ public class Sphere : MonoBehaviour
         for (int j = 0; j < circlepitGoalList.Count; j++)
         {
             moshAgents[i].goalsList.Add(circlepitGoalList[j]);
+            moshAgents[i].goalsWaitList.Add(0.2f);
+
+            //moshAgents[i].goalsList[j+1] = circlepitGoalList[j];
             //moshAgents[i].SkipGoal();
         }
         moshAgents[i].goalsList.RemoveAt(0);
         moshAgents[i].FirstGoal();
         moshAgents[i].reverse = false;
+        moshAgents[i].circlepit = true;
         
     }
 

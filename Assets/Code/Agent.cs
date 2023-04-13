@@ -43,6 +43,9 @@ namespace Biocrowds.Core
 
         private float rt = 0f;
 
+        public bool circlepit = false;
+
+
         //goal
         public GameObject Goal;
         // Multiple goals
@@ -256,7 +259,7 @@ namespace Biocrowds.Core
                 _visualAgent.Step();
                 
                 //if(_velocity.magnitude < 0.1 /*_maxSpeed / 2*/) {
-                    if (!reflect) {
+                    if (!reflect && !circlepit) {
                         _visualAgent.transform.LookAt(Stage.transform.position);
 
                         //var targetRotation = Quaternion.LookRotation(Stage.transform.position);
@@ -304,7 +307,7 @@ namespace Biocrowds.Core
         {
             if (goalIndex != goalsWaitList.Count - 1 && goalIndex + 1 > goalsWaitList.Count) //colocar 8 0s na wait list
             {
-                Debug.LogError("No wait defined for current goal");
+                //Debug.LogError("No wait defined for current goal");
                 return;
             }
             if (isWaiting)
@@ -315,8 +318,13 @@ namespace Biocrowds.Core
                     isWaiting = false;
                     goalIndex++;
                     UpdateGoalPositionAndNavmesh();
+                    if (circlepit && goalIndex == goalsList.Count - 1)
+                    {
+                        FirstGoal();
+                    }
                 }
             }
+            
             //else if (IsAtCurrentGoal()) original conditions
             else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1)   //modified conditions
             {
@@ -331,6 +339,10 @@ namespace Biocrowds.Core
                     waitCount = 0.0f;
                     goalIndex++;
                     UpdateGoalPositionAndNavmesh();
+                    if (circlepit && goalIndex == goalsList.Count-1)
+                    {
+                        FirstGoal();
+                    }
                 }
             }
         }
