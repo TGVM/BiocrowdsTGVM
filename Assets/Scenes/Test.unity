@@ -2226,6 +2226,7 @@ MonoBehaviour:
   Cells: []
   Agents: []
   moshAgents: []
+  timeInGoal: 0.2
   MarkerRadius: 0.1
   MarkerDensity: 0.65
   auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
@@ -9405,6 +9406,7 @@ MonoBehaviour:
   Cells: []
   Agents: []
   moshAgents: []
+  timeInGoal: 0.2
   MarkerRadius: 0.1
   MarkerDensity: 0.65
   auxinPrefab: {fileID: 114037783865560150, guid: a4cbdac8590e952489e5ec8974b65f64,
@@ -13464,7 +13466,7 @@ PrefabInstance:
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}
       propertyPath: numberAgMosh
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114285194632179770, guid: 3d322bc9d9d73524b9a1ca068bbf97c7,
         type: 3}

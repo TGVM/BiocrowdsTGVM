@@ -418,7 +418,7 @@ public class Sphere : MonoBehaviour
         //muda index da goal list para index de goal mais próximo + 1
         int indexAux = circlepitGoalList.FindIndex(item => item.Equals(goalAux));
 
-        if (indexAux + 1 > moshAgents[i].goalsWaitList.Count)
+        if (indexAux + 1 >= moshAgents[i].goalsList.Count)
         {
             moshAgents[i].FirstGoal();
         }
