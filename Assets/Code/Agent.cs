@@ -303,6 +303,11 @@ namespace Biocrowds.Core
             goalIndex = 0;
         }
 
+        public void setGoalIndex(int newIndex)
+        {
+            goalIndex = newIndex;
+        }
+
         public void WaitStep(float _timeStep)
         {
             if (goalIndex != goalsWaitList.Count - 1 && goalIndex + 1 > goalsWaitList.Count) //colocar 8 0s na wait list

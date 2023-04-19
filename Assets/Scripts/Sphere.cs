@@ -42,10 +42,11 @@ public class Sphere : MonoBehaviour
     private bool ltemp = false;
     private bool agReady = false;
 
-
+    [Header("Circlepit")]
     private bool cpTemp = false;
     private bool circlepit = false;
     private bool ccTemp = false;
+    public float timeInGoal = 0.2f;
 
     //radius for auxin collide
     public float MarkerRadius = 0.1f;
@@ -395,17 +396,35 @@ public class Sphere : MonoBehaviour
         alreadyUsed.Add(i);
 
         moshAgents[i].goalsList.RemoveAt(moshAgents[i].goalsList.Count - 1);
-        //moshAgents[i].FirstGoal();
+
+        float dist = 10000;
+        object goalAux = null;
+
         for (int j = 0; j < circlepitGoalList.Count; j++)
         {
             moshAgents[i].goalsList.Add(circlepitGoalList[j]);
-            moshAgents[i].goalsWaitList.Add(0.2f);
+            moshAgents[i].goalsWaitList.Add(timeInGoal);
 
-            //moshAgents[i].goalsList[j+1] = circlepitGoalList[j];
-            //moshAgents[i].SkipGoal();
+            
+            if(Vector3.Distance(moshAgents[i].transform.position, circlepitGoalList[j].transform.position) < dist)
+            {
+                dist = Vector3.Distance(moshAgents[i].transform.position, circlepitGoalList[j].transform.position);
+                goalAux = circlepitGoalList[j];
+            }
         }
         moshAgents[i].goalsList.RemoveAt(0);
-        moshAgents[i].FirstGoal();
+        
+
+        //muda index da goal list para index de goal mais próximo + 1
+        int indexAux = circlepitGoalList.FindIndex(item => item.Equals(goalAux));
+
+        if (indexAux + 1 > moshAgents[i].goalsWaitList.Count)
+        {
+            moshAgents[i].FirstGoal();
+        }
+        else { 
+            moshAgents[i].setGoalIndex(indexAux + 1);
+        }
         moshAgents[i].reverse = false;
         moshAgents[i].circlepit = true;
         
@@ -450,24 +469,6 @@ public class Sphere : MonoBehaviour
 
     
 
-
-    //void goalCircleMovement() {
-    //    GameObject goal = moshpitGoalList[0];
-
-    //fazer goal se mover em círculo
-    //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
-
-
-        //angle += (moveSpeed / (cpRadius* Mathf.PI* 2.0f)) * Time.deltaTime;
-        //goal.transform.localPosition = new Vector3(Mathf.Cos(angle), goal.transform.localPosition.y, Mathf.Sin(angle)) / cpRadius;
-
-        //mandar agentes seguirem goal
-    //}
-
-
-
-
-
     public IEnumerator timer(float seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
@@ -478,6 +479,21 @@ public class Sphere : MonoBehaviour
     //ONLY COMMENTS BELLOW THAT LINE
     //----------------------------------------------------------------------
 
+
+
+
+    //void goalCircleMovement() {
+    //    GameObject goal = moshpitGoalList[0];
+
+    //fazer goal se mover em círculo
+    //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
+
+
+    //angle += (moveSpeed / (cpRadius* Mathf.PI* 2.0f)) * Time.deltaTime;
+    //goal.transform.localPosition = new Vector3(Mathf.Cos(angle), goal.transform.localPosition.y, Mathf.Sin(angle)) / cpRadius;
+
+    //mandar agentes seguirem goal
+    //}
 
     //finding far from goal
     //maybe get agents far from goal and outside the sphere
