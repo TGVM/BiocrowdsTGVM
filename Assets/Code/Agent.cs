@@ -322,15 +322,37 @@ namespace Biocrowds.Core
                 {
                     isWaiting = false;
                     goalIndex++;
+                    if (circlepit)
+                        goalIndex = goalIndex % goalsList.Count;
                     UpdateGoalPositionAndNavmesh();
-                    if (circlepit && goalIndex == goalsList.Count - 1)
-                    {
-                        FirstGoal();
-                    }
+                    //if (circlepit && goalIndex == goalsList.Count)
+                    //{
+                    //    FirstGoal();
+                    //}
                 }
             }
-            
+
             //else if (IsAtCurrentGoal()) original conditions
+            else if (IsAtCurrentGoal() && circlepit && goalIndex < goalsList.Count)   //modified conditions
+            {
+                if (goalsWaitList[goalIndex] >= 0.1f)
+                {
+                    waitCount = 0.0f;
+                    isWaiting = true;
+                }
+                else
+                {
+                    //usar modulo
+                    waitCount = 0.0f;
+                    goalIndex++;
+                    goalIndex = goalIndex % goalsList.Count;
+                    UpdateGoalPositionAndNavmesh();
+                    //if (circlepit && goalIndex == goalsList.Count-1)
+                    //{
+                    //    FirstGoal();
+                    //}
+                }
+            }
             else if (IsAtCurrentGoal() && goalIndex < goalsList.Count - 1)   //modified conditions
             {
                 if (goalsWaitList[goalIndex] >= 0.1f)
@@ -343,11 +365,13 @@ namespace Biocrowds.Core
                     //usar modulo
                     waitCount = 0.0f;
                     goalIndex++;
+                    if (circlepit)
+                        goalIndex = goalIndex % goalsList.Count;
                     UpdateGoalPositionAndNavmesh();
-                    if (circlepit && goalIndex == goalsList.Count-1)
-                    {
-                        FirstGoal();
-                    }
+                    //if (circlepit && goalIndex == goalsList.Count-1)
+                    //{
+                    //    FirstGoal();
+                    //}
                 }
             }
         }

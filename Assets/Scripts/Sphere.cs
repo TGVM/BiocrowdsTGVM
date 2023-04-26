@@ -400,6 +400,9 @@ public class Sphere : MonoBehaviour
         float dist = 10000;
         object goalAux = null;
 
+        // moshAgents[i].goalsList = new List<GameObject>();
+        // moshAgents[i].goalsWaitList = new List<GameObject>();
+
         for (int j = 0; j < circlepitGoalList.Count; j++)
         {
             moshAgents[i].goalsList.Add(circlepitGoalList[j]);
@@ -427,7 +430,7 @@ public class Sphere : MonoBehaviour
         }
         moshAgents[i].reverse = false;
         moshAgents[i].circlepit = true;
-        
+        // moshAgents[i].UpdateGoalPositionAndNavmesh();
     }
 
     void goalRandomMovement()
