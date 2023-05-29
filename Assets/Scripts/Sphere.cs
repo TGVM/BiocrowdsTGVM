@@ -252,7 +252,7 @@ public class Sphere : MonoBehaviour
         {
             GameObject newGoal = moshpitGoalList[0];
 
-            Agents[i].agentRadius = Agents[i].agentRadius / 4;
+            //Agents[i].agentRadius = Agents[i].agentRadius / 4;
             Agents[i].AddGoal(newGoal);
             Agents[i].SkipGoal();
 
