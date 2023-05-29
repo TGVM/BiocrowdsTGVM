@@ -149,9 +149,7 @@ public class Sphere : MonoBehaviour
             ccTemp = circlepit;
             if (circlepit)
             {
-                //GameObject goal = moshpitGoalList[0];
-                //goal.transform.localPosition = new Vector3(goal.transform.localPosition.x + 1, goal.transform.localPosition.y, goal.transform.localPosition.z);
-                //PARA FAZER A VERSÃO COM 1 GOAL CIRCULANDO
+                
 
                 Agents = World.Agents;
                 FindAgents();
@@ -192,7 +190,7 @@ public class Sphere : MonoBehaviour
         {
             Agents[i].FirstGoal();
             //Agents[i].transform.GetChild(2).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-            Agents[i].agentRadius *= 4;
+            //Agents[i].agentRadius *= 4;
             if (Agents[i].reflect) Agents[i].reflect = false;
             if (Agents[i].reverse) Agents[i].reverse = false;
             //Agents[i].FindNearAuxins();
@@ -251,6 +249,12 @@ public class Sphere : MonoBehaviour
         for (int i = 0; i < Agents.Count; i++)
         {
             GameObject newGoal = moshpitGoalList[0];
+
+            /*
+             add remoção de goals
+             
+             */
+
 
             //Agents[i].agentRadius = Agents[i].agentRadius / 4;
             Agents[i].AddGoal(newGoal);
@@ -416,7 +420,10 @@ public class Sphere : MonoBehaviour
             }
         }
         moshAgents[i].goalsList.RemoveAt(0);
-        
+
+        /*
+         add remoção de goals
+         */
 
         //muda index da goal list para index de goal mais próximo + 1
         int indexAux = circlepitGoalList.FindIndex(item => item.Equals(goalAux));
