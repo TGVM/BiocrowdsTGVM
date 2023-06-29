@@ -469,7 +469,6 @@ namespace Biocrowds.Core
                 _agents[i].WaitStep(SIMULATION_TIME_STEP);
                 //if (_agents[i].IsAtCurrentGoal() && !_agents[i].isWaiting)
 
-
                 if (_agents[i].removeWhenGoalReached && _agents[i].IsAtFinalGoal())
                     _agentsToRemove.Add(_agents[i]);
             }

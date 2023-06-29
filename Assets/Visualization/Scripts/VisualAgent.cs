@@ -23,10 +23,31 @@ public class VisualAgent : MonoBehaviour
     Vector3 avgDir;
     [SerializeField]
     public List<Vector3> dirView;
+    public bool printData = false;
 
+    public void Initialize(Vector3 pos, Agent p_agent)
+    {
+        //transform.Rotate(Vector3.right,-90) ;
+        anim = GetComponent<Animator>();
+        moveMem = new Queue<float>();
+        dirMem = new Queue<Vector3>();
+        currPosition = new Vector3(pos.x, pos.y, pos.z);
+        transform.position = currPosition;
+        transform.LookAt(p_agent.goalsList[0].transform.position);
+        updated = false;
+        for (int i = 0; i < 15; i++)
+        {
+            moveMem.Enqueue(0);
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            dirMem.Enqueue((pos - p_agent.goalsList[0].transform.position).normalized);
+        }
+        dirView = dirMem.ToList();
+        initialized = true;
+    }
 
-	// Update is called once per frame
-	public void Step() 
+    public void Step() 
     {
         prevMoveVect = currMoveVect;
         currMoveVect = currPosition - transform.parent.position;
@@ -68,6 +89,11 @@ public class VisualAgent : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0, Mathf.Atan2(speed.x,speed.z)*180f,0);
         
         Vector3 targetDirection = -avgDir.normalized;
+        if (printData)
+        {
+            Debug.Log("Speed sum" + speedSum);
+            Debug.Log("Target Dir" + targetDirection);
+        }
         //transform.rotation = Quaternion.LookRotation(targetDirection);
         if (targetDirection != Vector3.zero)
         {
@@ -90,27 +116,6 @@ public class VisualAgent : MonoBehaviour
 
     }
 
-    public void Initialize(Vector3 pos, Agent p_agent)
-    {
-        //transform.Rotate(Vector3.right,-90) ;
-        anim = GetComponent<Animator>();
-        moveMem = new Queue<float>();
-        dirMem = new Queue<Vector3>();
-        currPosition = new Vector3(pos.x, pos.y, pos.z);
-        transform.position = currPosition;
-        transform.LookAt(p_agent.goalsList[0].transform.position);
-        updated = false;
-        for (int i = 0; i < 15; i++)
-        {
-            moveMem.Enqueue(0);
-        }
-        for (int i = 0; i < 10; i++)
-        {
-            dirMem.Enqueue((pos - p_agent.goalsList[0].transform.position).normalized);
-        }
-        dirView = dirMem.ToList();
-        initialized = true;
-    }
 
 
 

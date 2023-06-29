@@ -291,7 +291,11 @@ namespace Biocrowds.Core
         public void MovementStep(float _timeStep)
         {
             if (_velocity.sqrMagnitude > 0.0f)
-                transform.Translate(_velocity * _timeStep, Space.World);
+            {
+                var _mov = _velocity * _timeStep;
+                _mov = Vector3.ClampMagnitude(_mov, distanceToCurrentGoal);
+                transform.Translate(_mov, Space.World);
+            }
         }
 
         public void SkipGoal()
